@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="成功的路上并不拥挤">
-<meta property="og:type" content="website">
+  <meta name="description" content="softmax函数https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;105722023 对于二分类问题来说，除了可以使用单个输出节点表示事件A发生的概率 P(A|x) 外，还可以分别预测 P(A|x) 和 P(A¯|x) ，并满足约束：P(A|x) + P(A¯|x) &#x3D;1 。其中 A¯ 表示事件A的对立事件。 当然可以将输出为两个节点的二分类推广成拥有n个输出节点的n分类问题。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="韩老魔">
-<meta property="og:url" content="http://example.com/archives/2023/11/index.html">
+<meta property="og:url" content="http://example.com/2023/11/28/softmax%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="韩老魔">
-<meta property="og:description" content="成功的路上并不拥挤">
+<meta property="og:description" content="softmax函数https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;105722023 对于二分类问题来说，除了可以使用单个输出节点表示事件A发生的概率 P(A|x) 外，还可以分别预测 P(A|x) 和 P(A¯|x) ，并满足约束：P(A|x) + P(A¯|x) &#x3D;1 。其中 A¯ 表示事件A的对立事件。 当然可以将输出为两个节点的二分类推广成拥有n个输出节点的n分类问题。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9\%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB\softmax.png">
+<meta property="article:published_time" content="2023-11-28T07:20:58.035Z">
+<meta property="article:modified_time" content="2023-11-09T07:06:53.455Z">
 <meta property="article:author" content="胜强">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9\%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB\softmax.png">
 
-<link rel="canonical" href="http://example.com/archives/2023/11/">
+<link rel="canonical" href="http://example.com/2023/11/28/softmax%E5%87%BD%E6%95%B0/">
 
 
 <script id="page-configurations">
@@ -38,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 韩老魔</title>
+  <title> | 韩老魔</title>
   
 
 
@@ -161,234 +165,100 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 12 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/softmax%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 15:06:53" itemprop="dateModified" datetime="2023-11-09T15:06:53+08:00">2023-11-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
-    </div>
+        <h1 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105722023">https://zhuanlan.zhihu.com/p/105722023</a></p>
+<p>对于二分类问题来说，除了可以使用单个输出节点表示事件A发生的概率 P(A|x) 外，还可以分别预测 P(A|x) 和 P(A¯|x) ，并满足约束：P(A|x) + P(A¯|x) &#x3D;1 。其中 A¯ 表示事件A的对立事件。</p>
+<p><strong>当然可以将输出为两个节点的二分类推广成拥有n个输出节点的n分类问题。</strong></p>
+<p>有没有将各个输出节点的输出值范围映射到[0, 1]，并且约束各个输出节点的输出值的和为1的函数呢？</p>
+<p>当然，这个函数就是Softmax函数。</p>
+<p>Softmax从字面上来说，可以分成soft和max两个部分。max故名思议就是最大值的意思。Softmax的核心在于soft，而soft有软的含义，与之相对的是hard硬。很多场景中需要我们找出数组所有元素中值最大的元素，实质上都是求的hardmax。下面使用Numpy模块以及TensorFlow深度学习框架实现hardmax。</p>
+<p>例如：</p>
+<p>使用Numpy模块实现hardmax：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">a = np.array([1, 2, 3, 4, 5]) # 创建ndarray数组</span><br><span class="line">a_max = np.max(a)</span><br><span class="line">print(a_max) # 5</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/CNN(%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/DINO/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/CLIP%E6%A8%A1%E5%9E%8B%EF%BC%88Contrastive%20Language-Image%20Pre-training%EF%BC%89/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/yolov8/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/Transformer/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/softmax%E5%87%BD%E6%95%B0/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/SAM/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/RNN(%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T15:20:58+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/Grounded-SAM/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p>通过上面的例子可以看出hardmax最大的特点就是只选出其中一个最大的值，即非黑即白。但是往往在实际中这种方式是不合情理的，比如对于文本分类来说，一篇文章或多或少包含着各种主题信息，我们更期望得到文章对于每个可能的文本类别的概率值（置信度），可以简单理解成属于对应类别的可信度。所以此时用到了soft的概念，Softmax的含义就在于不再唯一的确定某一个最大值，而是为每个输出分类的结果都赋予一个概率值，表示属于每个类别的可能性。</p>
+<p>下面给出Softmax函数的定义（以第i个节点输出为例）：<img src="D:\新建文件夹\论文精读\softmax.png"></p>
+<p>，其中 Zi 为第i个节点的输出值，C为输出节点的个数，即分类的类别个数。通过Softmax函数就可以将多分类的输出值转换为范围在[0, 1]和为1的概率分布。</p>
+<p>引入指数函数对于Softmax函数是把双刃剑，即得到了优点也暴露出了缺点：</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/28/SAM/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/28/Transformer/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2023/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2023/11/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -440,6 +310,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">softmax函数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

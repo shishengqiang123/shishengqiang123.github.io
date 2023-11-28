@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Grounding 任务一、Grounding简介Grounding 任务是指将自然语言文本与视觉场景之间进行对齐或连接的任务。在这个任务中，文本描述和视觉信息需要建立联系，以实现跨模态的理解和交互。 Grounding 任务可以包括以下几种类型： 图像描述生成：这个任务要求从给定的图像中生成相应的文本描述。模型需要将图像的视觉信息转化为自然语言的表达形式，使其能够准确地描述图像的内容和特征。视觉">
+<meta property="og:type" content="article">
+<meta property="og:title" content="韩老魔">
+<meta property="og:url" content="http://example.com/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/index.html">
+<meta property="og:site_name" content="韩老魔">
+<meta property="og:description" content="Grounding 任务一、Grounding简介Grounding 任务是指将自然语言文本与视觉场景之间进行对齐或连接的任务。在这个任务中，文本描述和视觉信息需要建立联系，以实现跨模态的理解和交互。 Grounding 任务可以包括以下几种类型： 图像描述生成：这个任务要求从给定的图像中生成相应的文本描述。模型需要将图像的视觉信息转化为自然语言的表达形式，使其能够准确地描述图像的内容和特征。视觉">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-7b70bc86fc5f84d9dd34eac1a4a44074_720w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-f8407d99e960d1769eb349f008654db1_720w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-a684d67a3c39f5939e98f362db842122_720w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-953710dde71e48e3f8c726ad388b384d_720w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-1e3503186ed097e826183acf655ee0f6_720w.webp">
+<meta property="article:published_time" content="2023-11-28T07:20:58.031Z">
+<meta property="article:modified_time" content="2023-11-10T07:43:21.280Z">
+<meta property="article:author" content="胜强">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-7b70bc86fc5f84d9dd34eac1a4a44074_720w.webp">
+
+<link rel="canonical" href="http://example.com/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 韩老魔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">韩老魔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 15:43:21" itemprop="dateModified" datetime="2023-11-10T15:43:21+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Grounding-任务"><a href="#Grounding-任务" class="headerlink" title="Grounding 任务"></a>Grounding 任务</h1><h2 id="一、Grounding简介"><a href="#一、Grounding简介" class="headerlink" title="一、Grounding简介"></a>一、Grounding简介</h2><p>Grounding 任务是指将自然语言文本与视觉场景之间进行对齐或连接的任务。在这个任务中，文本描述和视觉信息需要建立联系，以实现跨模态的理解和交互。</p>
+<p>Grounding 任务可以包括以下几种类型：</p>
+<p>图像描述生成：这个任务要求从给定的图像中生成相应的文本描述。模型需要将图像的视觉信息转化为自然语言的表达形式，使其能够准确地描述图像的内容和特征。<br>视觉问答：在这个任务中，给定一个图像和一个与之相关的问题，模型需要理解问题的含义，并从图像中获取所需的信息来回答问题。这要求模型将问题中的语义与图像中的视觉内容进行连接。<br>图像标注：这个任务要求给定一张图像，模型需要生成与图像内容相关的标注或描述。模型需要理解图像中的场景、对象和动作等信息，并生成与之对应的文本标注。<br>视觉指代消解：在这个任务中，给定一段文本和图像，模型需要理解文本中的指代（如代词、名词短语）所指向的具体图像区域。这要求模型将文本中的指代与图像中的实体进行对应。<br>视觉关系预测：这个任务要求模型理解图像中不同对象之间的关系，并从文本描述中预测出这些关系。模型需要将视觉信息和文本信息进行对齐，以准确地识别和预测对象之间的关联。<br>Grounding 任务对于实现跨模态的理解和交互非常重要。通过解决这些任务，可以促进自然语言处理和计算机视觉之间的融合，进一步推动智能系统在理解和处理多模态数据方面的能力。</p>
+<p>二、word-region 级别的 grounding 任务<br>Word-region 级别的 grounding 任务是一种将自然语言单词与图像中的特定区域对应起来的任务。在这个任务中，给定一个自然语言描述和一张图像，模型需要确定描述中的每个单词与图像中的哪个区域或对象相对应。</p>
+<p>这种任务可以用于构建更精细的文本与图像之间的对齐，实现更细粒度的视觉与语言交互。下面是一些常见的 word-region 级别的 grounding 任务：</p>
+<p>单词级别的 grounding：在这个任务中，给定一个自然语言描述和图像，模型需要确定每个单词与图像中的哪个区域或对象对应。例如，对于一个描述”在图像中，有一只蓝色的小猫坐在椅子上”，模型需要将单词”蓝色”与图像中蓝色的区域、单词”小猫”与图像中猫的区域以及单词”椅子”与图像中椅子的区域对应起来。<br>短语级别的 grounding：这个任务要求模型将连续的单词或短语与图像中的一组区域或对象进行对应。例如，对于一个描述”在图像中，有一辆红色的汽车和一栋高楼”，模型需要将短语”红色的汽车”与图像中红色汽车的区域以及短语”高楼”与图像中高楼的区域对应起来。<br>实体级别的 grounding：在这个任务中，给定一个自然语言描述和图像，模型需要将描述中的具体实体与图像中相应的实体区域对应起来。例如，对于一个描述”图像中的篮球运动员正在投篮”，模型需要将”篮球运动员”这个实体与图像中的篮球运动员的区域对应起来。<br>word-region 级别的 grounding 任务可以用于图像标注、视觉问答、图像检索等多种视觉与语言交互的任务中。它对于理解文本描述和图像之间的语义关系以及实现更细粒度的视觉与语言对齐具有重要意义。</p>
+<p>三、MLM、ITM代理任务<br>MLM 和 ITM 是自然语言处理（NLP）中的两种代理任务，用于预训练模型（如 BERT、GPT）的训练过程中。</p>
+<p>MLM（Masked Language Modeling，遮蔽语言建模）：MLM 是一种基于掩码的预测任务，旨在让模型学会填补被遮蔽的文本片段。在训练过程中，输入的文本序列中的某些单词会被随机选择并遮蔽掉，然后模型需要根据上下文信息来预测这些被遮蔽的单词。模型在预测遮蔽单词时，可以利用上下文中的其他单词来获取语义和语法上的线索。MLM 旨在使模型学习到单词的上下文表示以及语义关系，从而提高模型在下游任务中的表现。<br>ITM（Image-Text Matching，图像-文本匹配）：ITM 是一种跨模态的匹配任务，旨在训练模型将图像和文本进行对齐。在ITM任务中，模型接收一对图像和文本作为输入，然后需要判断它们之间的相关性或匹配程度。模型需要学习将图像和文本嵌入空间中的表示进行对齐，以便能够准确地匹配图像和与之相关的文本。ITM 任务可以用于图像标注、视觉问答和图像检索等多种视觉与语言交互任务中。<br>这两个代理任务通常作为预训练模型的训练目标，通过大规模的文本和图像数据进行联合训练，使模型能够学习到更丰富的语义表示和跨模态的对齐能力。预训练模型在完成 MLM 和 ITM 任务后，可以通过微调或在下游任务中使用这些学到的表示来提升各种自然语言处理和计算机视觉任务的性能。</p>
+<h2 id="二、visual-grounding任务简介"><a href="#二、visual-grounding任务简介" class="headerlink" title="二、visual grounding任务简介"></a>二、visual grounding任务简介</h2><p>visual grounding涉及计算机视觉和自然语言处理两个模态。简要来说，输入是图片（image）和对应的物体描述（sentence\caption\description），输出是描述物体的box。听上去和目标检测非常类似，区别在于输入多了语言信息，在对物体进行定位时，要先对语言模态的输入进行理解，并且和视觉模态的信息进行融合，最后利用得到的特征表示进行定位预测。visual grounding按照是否要对语言描述中<strong>所有</strong>提及的物体进行定位，可以进一步划分为两个任务：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-7b70bc86fc5f84d9dd34eac1a4a44074_720w.webp" alt="img"></p>
+<p>1.Phrase Localization：又称为Phrase Grounding，如上图，对于给定的sentence，要定位其中提到的全部物体（phrase），在数据集中对于所有的phrase都有box标注。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-f8407d99e960d1769eb349f008654db1_720w.webp" alt="img"></p>
+<p>2.Referring Expression Comprehension（REC）：也称为Referring expression grounding。见上图，每个语言描述（这里是expression）只指示一个物体，每句话即使有上下文物体，也只对应一个指示物体的box标注。</p>
+<h2 id="三、visual-grounding常用数据集与评估指标"><a href="#三、visual-grounding常用数据集与评估指标" class="headerlink" title="三、visual grounding常用数据集与评估指标"></a>三、visual grounding常用数据集与评估指标</h2><p>1.Phrase Localization：常用的数据集即Flickr30k Entities数据集[1]，包含31783张image，每张图会对应5个不同的caption，所以总共158915个caption，以及244035个phrase-box标注。对于每个phrase还细分为people, clothing, body parts, animals, vehicles, instruments, scene, othera八个不同的类别。</p>
+<p>另外很多phrase localization的工作还会在ReferItGame数据集[2]（又称RefCLEF）上进行实验，这个数据集严格来说应该属于REC任务。图片来自ImageCLEF数据集，包含130525个expression，涉及238个不同的物体种类，有96654个物体，19894张图像。其中的数据是通过一种称为refer it game的双人游戏进行标注的，如下图：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-a684d67a3c39f5939e98f362db842122_720w.webp" alt="img"></p>
+<p>左侧的人根据region来写expression，右侧的人根据expression选择region。</p>
+<p>\2. Referring expression comprehension：常用的有三个数据集RefCOCO[3], RefCOCO+[3], RefCOCOg[4]。这三个数据集的区别可以通过下面的样例理解：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-953710dde71e48e3f8c726ad388b384d_720w.webp" alt="img"></p>
+<p><strong>标注方式上：</strong></p>
+<ul>
+<li>RefCOCOg采用的是非交互式标注法，选定区域请人标注，再请另外一批人根据标注的expression选择对应的region；</li>
+<li>RefCOCO和RefCOCO+采用的是双人游戏 (Refer it game)的方式.</li>
+</ul>
+<p><strong>数据划分方式上：</strong></p>
+<ul>
+<li>RefCOCO和RefCOCO+包含train, val, testA, testB。testA的图片包含多个人；testB的图片包含多个除人之外的物体。<strong>同一个图片的object-expression样本对要么全在训练集，要么全在验证\测试集</strong>。</li>
+<li>RefCOCOg包含train, val, test。是按照object进行划分的，<strong>同一个图片的object-expression样本对集合可能会在训练集一部分，在验证\测试集另一部分</strong>。</li>
+</ul>
+<p><strong>图片选择上：</strong></p>
+<ul>
+<li>RefCOCO：图像包含同一类别的多个物体。</li>
+<li>RefCOCO+：图像包含同一类别的多个物体，并且expression不能有绝对位置（e.g., left）的词。</li>
+<li>RefCOCOg：图像包含同一类别的2-4个物体，覆盖面积超过图片面积的5%</li>
+</ul>
+<p><strong>评估指标：</strong></p>
+<ol>
+<li>prediction box和groud-truth box的交并比（intersection over union，IoU）大于0.5记为一次正确定位，以此来计算准确率（Accuracy）。最近的一些工作使用Recall@k指标，表示预测概率前k大的prediction box和ground-truth box的IoU大于0.5的定位准确率。</li>
+<li>Pointing game，选择最终预测的attention mask中权重最大的像素位置，如果该点落在ground-truth区域内，记为一次正确定位。相比Acc指标更加宽松。</li>
+</ol>
+<h2 id="四、visual-grounding主流做法"><a href="#四、visual-grounding主流做法" class="headerlink" title="四、visual grounding主流做法"></a>四、visual grounding主流做法</h2><p>目前visual grounding可以分为全监督（Fully-supervised）、弱监督（Weakly-supervised）、无监督（Unsupervised）三种。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-1e3503186ed097e826183acf655ee0f6_720w.webp" alt="img"></p>
+<ul>
+<li>全监督（Fully-supervised）：顾名思义，就是有object-phrase的box标注信息。</li>
+<li>弱监督（Weakly-supervised）：输入只有image和对应的sentence，<strong>没有</strong>sentence中的object-phrase的box标注。</li>
+<li>无监督（Unsupervised）：image-sentence的信息都没有。目前据我所知，只有ICCV2019的WPT[5]是无监督，非常有意思，结果也很有比较价值。</li>
+</ul>
+<p>这里再简要扩展一下全监督和弱监督的主要做法，后续的文章会详细对每篇工作进行梳理。</p>
+<ul>
+<li>全监督中，现在的做法可以分为<strong>two-stage和one-stage</strong>两种做法。two-stage就是第一个阶段先通过RPN或者传统的算法（Edgebox、SelectiveSearch）等提取候选的proposals以及它们的features，然后在第二个阶段进行详细的推理，例如常见的做法是把视觉特征和语言特征投射到一个<strong>公共的向量空间</strong>，计算相似度，选择最相近的proposal作为预测结果。one-stage则是基于目标检测领域的one-stage模型，例如YOLO、RetinaNet等。</li>
+<li>弱监督由于缺少phrase和box之间的mapping，会额外设计很多损失函数，例如基于reconstruction，引入external knowledge，基于image-caption匹配设计loss的等等。这里推荐一篇CVPR2021弱监督工作[6]，很有学习价值~</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/28/Grounded-SAM/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/28/RNN(%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Grounding-%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">Grounding 任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Grounding%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一、Grounding简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81visual-grounding%E4%BB%BB%E5%8A%A1%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二、visual grounding任务简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81visual-grounding%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-number">1.3.</span> <span class="nav-text">三、visual grounding常用数据集与评估指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81visual-grounding%E4%B8%BB%E6%B5%81%E5%81%9A%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">四、visual grounding主流做法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">胜强</p>
+  <div class="site-description" itemprop="description">成功的路上并不拥挤</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">胜强</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

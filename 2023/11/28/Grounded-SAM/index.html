@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Grounded-SAM一.简介具体来说，他们使用一个 SOTA 的 zero-shot 目标检测器（Grounding DINO）提取物体 box 和类别，然后输入给 SAM 模型出 mask，使得模型可以根据文本输入检测来分割任意物体。另外，他们还将其和 Stable Diffusion 结合做可控的图像编辑。 这个功能是实现自动数据标注，包括标签信息及预测概率，有点类似于 YOLOV8 系列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="韩老魔">
+<meta property="og:url" content="http://example.com/2023/11/28/Grounded-SAM/index.html">
+<meta property="og:site_name" content="韩老魔">
+<meta property="og:description" content="Grounded-SAM一.简介具体来说，他们使用一个 SOTA 的 zero-shot 目标检测器（Grounding DINO）提取物体 box 和类别，然后输入给 SAM 模型出 mask，使得模型可以根据文本输入检测来分割任意物体。另外，他们还将其和 Stable Diffusion 结合做可控的图像编辑。 这个功能是实现自动数据标注，包括标签信息及预测概率，有点类似于 YOLOV8 系列">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112011303.png">
+<meta property="og:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110103004867.png">
+<meta property="og:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112423051.png">
+<meta property="og:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110194259484.png">
+<meta property="og:image" content="https://github.com/IDEA-Research/GroundingDINO/blob/main/.asset/arch.png?raw=true">
+<meta property="og:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110203438947.png">
+<meta property="article:published_time" content="2023-11-28T07:20:58.030Z">
+<meta property="article:modified_time" content="2023-11-10T12:38:25.605Z">
+<meta property="article:author" content="胜强">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112011303.png">
+
+<link rel="canonical" href="http://example.com/2023/11/28/Grounded-SAM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 韩老魔</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">韩老魔</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/Grounded-SAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 20:38:25" itemprop="dateModified" datetime="2023-11-10T20:38:25+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Grounded-SAM"><a href="#Grounded-SAM" class="headerlink" title="Grounded-SAM"></a>Grounded-SAM</h1><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h2><p>具体来说，他们使用一个 SOTA 的 zero-shot 目标检测器（Grounding DINO）提取物体 box 和类别，然后输入给 SAM 模型出 mask，使得模型可以根据文本输入检测来分割任意物体。另外，他们还将其和 Stable Diffusion 结合做可控的图像编辑。</p>
+<p>这个功能是实现自动数据标注，包括标签信息及预测概率，有点类似于 YOLOV8 系列，借助 SAM 分割万物的思想可以直接对图片中的所有场景进行分割及分类标注。</p>
+<h2 id="1-1-主要功能"><a href="#1-1-主要功能" class="headerlink" title="1.1 主要功能"></a>1.1 主要功能</h2><h3 id="1-1-1-功能一"><a href="#1-1-1-功能一" class="headerlink" title="1.1.1 功能一"></a>1.1.1 功能一</h3><p>使用 Tag2Text 直接生成标签，使用 Grounded-SAM 进行 box 和 mask 生成。Tag2Text 具有卓越的标记和字幕功能。使用 BLIP 生成标题，使用 chatGPT 提取标签，使用 Ground-SAM 生成框和 MASK 图片。</p>
+<h3 id="1-1-2-功能二"><a href="#1-1-2-功能二" class="headerlink" title="1.1.2 功能二"></a>1.1.2 功能二</h3><p>这个功能主要是通过 <strong>whisper</strong> 模块对语音进行转换，直接对图片的检测对象进行替换。</p>
+<p>Segment Anything 是一个强大的细分模型。 但它需要提示（如框&#x2F;点）来生成掩码。<br>Grounding DINO 是一种强大的 zero-shot 检测器，能够生成带有自由格式文本的高质量框和标签。<br>Grounding DINO + SAM 的组合能够通过文本输入检测和分割任何级别的所有内容！<br>BLIP + Grounding DINO + SAM 组合自动贴标系统！<br>Grounding DINO + SAM + Stable-diffusion 数据工厂的组合，生成新数据！<br>Whisper + Grounding DINO + SAM 的组合，可以检测和分割任何有语音的东西！</p>
+<p>演示一下主要功能-grounded-sam</p>
+<h2 id="二-SAM"><a href="#二-SAM" class="headerlink" title="二.SAM"></a>二.SAM</h2><h3 id="2-1-目的"><a href="#2-1-目的" class="headerlink" title="2.1 目的"></a>2.1 目的</h3><p>SAM的目的是建立一个图像分割的基础模型，开发一个具有提示能力的模型。</p>
+<p>这些”基础模型”可以推广到超出训练过程中的任务和数据分布，这种能力通过“prompt engineering”实现，具体就是输入提示语得到有效的文本输出。使用大量文本数据进行缩放和训练后，发现这种零样本和少样本的训练的模型比微调模型效果还要好，数据集越大，效果越明显。</p>
+<p>模型要支持灵活的提示，且要实时生成mask,对输出也是模糊的(比如表示衣服还是穿衣服的人)，设计结构如下：一个prompt encoder，对提示进行编码，image encoder对图像编码，生成embedding, 最后融合2个encoder，再接一个轻量的mask decoder，输出最后的mask。</p>
+<p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112011303.png" alt="image-20231110112011303"></p>
+<p>视觉任务上比如CLIP，将文本和图像编码进行了对齐，通过提示语生成image encoder，就可以扩展到下游任务，比如生成图像。</p>
+<h3 id="2-2模型"><a href="#2-2模型" class="headerlink" title="2.2模型"></a>2.2模型</h3><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110103004867.png" alt="image-20231110103004867"></p>
+<h4 id="2-2-1-image-encoder"><a href="#2-2-1-image-encoder" class="headerlink" title="2.2.1 image encoder"></a>2.2.1 image encoder</h4><p>利用MAE(Masked AutoEncoder)预训练的Transformer（vit），最低限度适应高分辨率的输入，该encoder在prompt encoder之前，对每张图像只运行一次。输入(c,h,w)三通道的图像，对图像进行缩放，按照长边缩放成1024，短边不够就pad,得到(c,1024,1024)的图像，经过image encoder，得到对图像16倍下采样的feature，大小为(256,64,64)。</p>
+<h4 id="2-2-2-prompt-encoder"><a href="#2-2-2-prompt-encoder" class="headerlink" title="2.2.2 prompt encoder"></a>2.2.2 prompt encoder</h4><ul>
+<li><p>分成2类：稀疏的(点，box，文本)，稠密的（mask）</p>
+</li>
+<li><ul>
+<li>point:映射到256维的向量，包含代表点位置的 positional encoding，加2个代表该点是前景&#x2F;背景的可学习的embedding。</li>
+<li>box:用一个embedding对表示（1）可学习的embedding代表左上角（2）可学习的embedding代表右下角</li>
+<li>文本：通过CLIP模型进行文本编码</li>
+<li>mask:用输入图像1&#x2F;4分辨率的mask，然后用(2,2)卷积核，stride-2输出channel为4和16，再用(1,1)卷积核将channel升到256. mask 和image  embedding通过element-wise相乘(逐元素相乘，可以理解成mask的feature对image的feature进行加权)</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-mask-decoder"><a href="#2-2-3-mask-decoder" class="headerlink" title="2.2.3 mask decoder"></a>2.2.3 mask decoder</h4><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112423051.png" alt="image-20231110112423051"></p>
+<ul>
+<li>在prompt embeddings中插入一个可学习的token，用于docoder的输出。</li>
+</ul>
+<p>（1）prompt toekns+output tokens进行self attn,</p>
+<p>（2）用得到的token和image embedding进行 cross attn（token作为Q）</p>
+<p>（3）point-wise MLP 更新token</p>
+<p>（4）用image embedding和（3）的token进行cross atten（image embedding作为Q）</p>
+<p>重复上述步骤2次，再将attn再通过残差进行连接，最终输出masks和iou scores。</p>
+<h3 id="2-3-data-engine（数据引擎）"><a href="#2-3-data-engine（数据引擎）" class="headerlink" title="2.3.data engine（数据引擎）"></a>2.3.data engine（数据引擎）</h3><ul>
+<li>辅助人工标注</li>
+</ul>
+<p>通过SAM基于浏览器的交互式分割工具，通过“brush”和”eraser”工具，进行标注。模型可以实时输出mask，建议标注者优先标记他们命名的对象，按图层顺序标记，如果一个mask标记超过30s，先处理下一张。</p>
+<p>SAM先用公开数据集训练，然后再用新增的标注mask训练。随着数据越多，image-encoder的能力越强，retrained了6次。随着模型改进，每个mask平均标注时间从34s到14s，平均每张图像mask从22增加到44个。在这个过程中，从12万图像中，收集了430万个mask。</p>
+<ul>
+<li>半自动</li>
+</ul>
+<p>增加mask的多样性，首先检测出可信的mask，然后用预测mask填充图像，让标注者标注未标记的mask。为了检测可信的mask,先用第一步的mask训练了一个类别一样的box检测器。半自动过程中，从18万张图像中生成了590万个mask。用新收集的数据，重新训练模型，平均标注时间又回到了34s,因为新的mask都是比较有难度的。每张图像上mask从44增加到72。</p>
+<ul>
+<li>全自动</li>
+</ul>
+<p>利用前2步，得到的大量的和多样性的mask，结合模型可以根据不明确的输入也能输出有效的mask（参考mask encoder）,对图像生成（32,32）个格网点，每个点预测一系列mask，如果一个点落在部分、子部分上，模型返回部分、子部分和整体的object。同时，通过预测的iou筛选 <em><strong>confident*</strong>(可信的mask),选取一个</em><strong>stable*<strong>的mask(稳定的mask,在相似的mask中，概率阈值在 0.5-δ和 0.5-δ之间)；最后，通过nms过滤</strong>*confident**<em>和</em></strong>stable***中重复的mask。</p>
+<p>为了提高mask比较小的，还通过放大图像进行crop，处理多个mask覆盖的情况。</p>
+<p>在1100万数据集上，生成了11亿高质量的mask。</p>
+<ul>
+<li>数据情况</li>
+</ul>
+<p>* 图片：从合作商获取1100万张图像，按短边重采样到1500像素。</p>
+<p>* mask:99.1%都是自动生成的，通过对比分析，自动生成的mask质量也是非常高的。为了评估质量，随机选500张图像（约5万个mask），让专业的标注人员进行标注，通过对比发现94%的mask有90%以上的iou。</p>
+<p>* 数据分布更广，从全世界获取数据，mask更多，数据偏向性较小。</p>
+<h2 id="三-Grounded-DINO"><a href="#三-Grounded-DINO" class="headerlink" title="三.Grounded DINO"></a>三.Grounded DINO</h2><h3 id="3-1背景介绍"><a href="#3-1背景介绍" class="headerlink" title="3.1背景介绍"></a>3.1背景介绍</h3><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110194259484.png" alt="image-20231110194259484"></p>
+<p>在Grounding DINO中，作者想要完成这样一项任务：根据人类文字输入去检测任意类别的目标，称作<strong>开放世界目标检测问题（open-set object detection）。</strong></p>
+<p>完成<strong>open-set object detection</strong>的关键是将language信息引入到目标的通用特征表示中。例如，GLIP利用对比学习的方式在目标检测和文字短语之间建立起了联系，它在close-set和open-set数据集上都有很好的表现。但是，GLIP是基于传统的one-stage detector结构，就会有一定的局限性。</p>
+<p>受很多前期工作的启发（GLIP、DINO等），作者提出了Grounding DINO，它相对于GLIP有以下几点优势：</p>
+<p>Grounding DINO 的transformer结构更接近于NLP模型，因此它更容易同时处理图片和文字；</p>
+<p>Transformer-based detector在处理大型数据集时被证明有优势；</p>
+<p>作为DETR(detection transformer)的变种，DINO能够完成end-to-end的训练，而且不需要NMS(非极大值抑制（Non-Maximum Suppression）:它是一种用于目标检测中的后处理技术，旨在消除多个重叠的候选目标框，保留最可能包含目标的那一个)等额外的后处理。</p>
+<p>许多现存的工作都是通过引入语言信息来实现closed-set到open-set场景扩展的(一般在训练时不会接触到所有类别，这就需要模型具有较强的泛化能力)。通常来说，close-set detector由三个重要部分组成：<strong>Backbone</strong>用于提取特征，<strong>Neck</strong>用于特征增强，<strong>Head</strong>用于bbox预测。让一个close-set detector在文字引导下识别新类别的关键是利用contrastive loss建立图像特征和文字特征的关联。为了帮助模型获得跨模态的能力，一些工作在图像、文字的特征融合方面做了一些尝试。如下图所示，特征融合可能发生在以下三个阶段中：**neck (phase A), query initialization (phase B), 和 head (phase C)**。举例来说，GLIP选择了phase A，而OV-SETR选择在phase B进行模型融合。</p>
+<p>作者认为，在open-set检测任务中，越<strong>多</strong>越<strong>早</strong>的特征融合带来的收益越大。尽管这个想法很简单，但是在传统的detector中是很难实现的，因为类似Faster-RCNN这类的CNN-based模型很难在三个阶段和Transformer-based language模型特征进行融合。与此相对的，transformer-based detector与language model的结构高度相似，因此更容易进行特征融合。</p>
+<p>在以上结论的指导下，作者设计了不同的特征融合方式分别应用在三个阶段上：</p>
+<ul>
+<li><strong>Phasa A</strong>: 设计了结合self-attention、text-to-image cross-attention、image-to-text attention的特征enhancer应用在Neck中；</li>
+<li><strong>Phasa B</strong>: 设计了一个language-guided query selection方法用于初始化Head的query；</li>
+<li><strong>Phasa C</strong>: 设计了一个跨模态的decoder用于Head部分，从而增强query的特征表达。</li>
+</ul>
+<p>以上创新点我们会在后面详细展开。</p>
+<p>以往的open-set detection方法通常是在新的类别上测试其模型的有效性，如下图(b)左侧部分展示的那样。本文的作者引入了一个新的应用场景，那就是根据文字描述检测出指定部位，如下图(b)右侧部分那样，这个任务称为Referring Expression Comprehension (REC)。本文也会在REC任务中检验Grounding DINO的能力。</p>
+<h3 id="3-2方法创新"><a href="#3-2方法创新" class="headerlink" title="3.2方法创新"></a>3.2方法创新</h3><p><img src="https://github.com/IDEA-Research/GroundingDINO/blob/main/.asset/arch.png?raw=true" alt="arch.png"></p>
+<p>简单来说，既CLIP打破文字和图像之间的壁垒、DINO提高了目标检测精度的上限之后，又一力作横空出世，它就是–Grounding DINO。</p>
+<p>Grounding DINO的整体结构如上图所示。Grounding DINO是一个双encoder单decoder结构，它包含了一个<strong>image backbone</strong>用于提取image feature、一个<strong>text backbone</strong>用于提取text feature、一个<strong>feature enhancer</strong>用于融合image和text feature、一个<strong>language-guide query selection</strong>模块用于query初始化、一个<strong>cross-modality decoder</strong>用于bbox（bounding box）预测。</p>
+<h4 id="3-2-1-Feature-Extraction-and-Enhancer"><a href="#3-2-1-Feature-Extraction-and-Enhancer" class="headerlink" title="3.2.1 Feature Extraction and Enhancer"></a>3.2.1 Feature Extraction and Enhancer</h4><p>在特征提取方面，采取Swin Transformer作为image backbone，BERT（下面有介绍）作为text backbone。像DETR（detection Transformer）系列模型中设计的那样，image backbone提取了multi-scale的图像特征。提取完image features和text features后，作者将它们输入到一个feature enhancer中以融合跨模态特征，其结构如下图所示。</p>
+<p>​	<strong>Swin Transformer（是一种用于图像分类等计算机视觉任务的强大模型）：</strong></p>
+<p>​		Swin Transformer的一些关键特点和创新点包括：</p>
+<ol>
+<li><p><strong>局部操作和全局协同：</strong> Swin Transformer引入了一种分层的局部操作和全局协同的方式，通过使用小型的局部窗口来处理局部信息，并使用全局协同机制来整合不同局部信息。</p>
+</li>
+<li><p><strong>跨层连接：</strong> Swin Transformer引入了跨层连接，允许信息在不同层次之间传递。这有助于模型更好地捕获多尺度的特征。</p>
+</li>
+<li><p><strong>窗口化的注意力机制：</strong> Swin Transformer使用窗口化的注意力机制，以将输入分割为固定大小的窗口，并在每个窗口上执行自注意力操作。这种方法有效减少了计算复杂性。</p>
+</li>
+<li><p><strong>基于层次分解的Transformer块：</strong> Swin Transformer使用基于层次分解的Transformer块，将大型Transformer块分解为多个小的、可组合的块，这有助于提高训练效率。</p>
+<p><em><strong>BERT：（预训练语言模型，它基于Transformer架构）</strong></em>*</p>
+</li>
+</ol>
+<p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110203438947.png" alt="image-20231110203438947"></p>
+<p><strong>作者分别利用Deformable Self-Attention和Self-Attention来增强image features和text features，然后利用GLIP中的image-to-text 和 text-to-image cross-attention实现特征融合。</strong></p>
+<p>Deformable Self-Attention和传统的Self-Attention主要有两个关键的区别：注意力权重的计算和采样位置的灵活性。</p>
+<ol>
+<li><strong>注意力权重的计算：</strong><ul>
+<li><strong>Self-Attention：</strong> 传统的Self-Attention计算注意力权重时通常使用全连接层（通常是线性层）来学习权重。这意味着每个位置之间的关系由一个全局的权重矩阵决定。</li>
+<li><strong>Deformable Self-Attention：</strong> Deformable Self-Attention引入了可学习的偏移（offset）参数，使得每个位置可以在注意力计算中进行动态调整。这使得模型能够更灵活地调整不同位置之间的注意力分布，以适应输入数据的不规则结构。</li>
+</ul>
+</li>
+<li><strong>采样位置的灵活性：</strong><ul>
+<li><strong>Self-Attention：</strong> 在传统的Self-Attention中，注意力权重是通过全局的权重矩阵计算的，因此无法灵活地适应输入数据中的局部结构和变化。</li>
+<li><strong>Deformable Self-Attention：</strong> 引入了偏移参数后，Deformable Self-Attention可以根据输入数据的局部结构和特征差异来动态地调整注意力的计算。这使得模型更能够关注数据中的重要局部信息。</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/28/GLIP(Grounded%20Language-Image%20Pre-training)/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Grounded-SAM"><span class="nav-number">1.</span> <span class="nav-text">Grounded-SAM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">1.1 主要功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E5%8A%9F%E8%83%BD%E4%B8%80"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1.1 功能一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E5%8A%9F%E8%83%BD%E4%BA%8C"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.1.2 功能二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-SAM"><span class="nav-number">1.3.</span> <span class="nav-text">二.SAM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%9B%AE%E7%9A%84"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-image-encoder"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">2.2.1 image encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-prompt-encoder"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2.2.2 prompt encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-mask-decoder"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">2.2.3 mask decoder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-data-engine%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BC%95%E6%93%8E%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3.data engine（数据引擎）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-Grounded-DINO"><span class="nav-number">1.4.</span> <span class="nav-text">三.Grounded DINO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1背景介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%E6%96%B9%E6%B3%95%E5%88%9B%E6%96%B0"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2方法创新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-Feature-Extraction-and-Enhancer"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">3.2.1 Feature Extraction and Enhancer</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">胜强</p>
+  <div class="site-description" itemprop="description">成功的路上并不拥挤</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">胜强</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

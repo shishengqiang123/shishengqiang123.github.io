@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-resources">
 
-    <a href="/resources/" rel="section"><i class="download fa-fw"></i>resources</a>
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
 
   </li>
   </ul>
@@ -167,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/CNN(%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +181,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/11/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2023/11/28/CNN(%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -191,8 +191,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-11-28 09:36:00" itemprop="dateCreated datePublished" datetime="2023-11-28T09:36:00+08:00">2023-11-28</time>
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 15:52:04" itemprop="dateModified" datetime="2023-11-09T15:52:04+08:00">2023-11-09</time>
+              </span>
 
           
 
@@ -205,19 +212,1081 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <h1 id="CNN-卷积神经网络"><a href="#CNN-卷积神经网络" class="headerlink" title="CNN(卷积神经网络)"></a>CNN(卷积神经网络)</h1><p>卷积神经网络 – CNN 最擅长的就是图片的处理。它受到人类视觉神经系统的启发。</p>
+<p>CNN 有2大特点：</p>
+<ol>
+<li>能够有效的将大数据量的图片降维成小数据量</li>
+<li>能够有效的保留图片特征，符合图片处理的原则</li>
+</ol>
+<p>目前 CNN 已经得到了广泛的应用，比如：人脸识别、自动驾驶、美图秀秀、安防等很多领域。</p>
+<h2 id="一-CNN-解决了什么问题？"><a href="#一-CNN-解决了什么问题？" class="headerlink" title="一.CNN 解决了什么问题？"></a>一.CNN 解决了什么问题？</h2><p>在 CNN 出现之前，图像对于人工智能来说是一个难题，有2个原因：</p>
+<ol>
+<li>图像需要处理的数据量太大，导致成本很高，效率很低</li>
+<li>图像在数字化的过程中很难保留原有的特征，导致图像处理的准确率不高</li>
+</ol>
+<p>下面就详细说明一下这2个问题：</p>
+<h3 id="1-1需要处理的数据量太大"><a href="#1-1需要处理的数据量太大" class="headerlink" title="1.1需要处理的数据量太大"></a>1.1需要处理的数据量太大</h3><p>图像是由像素构成的，每个像素又是由颜色构成的。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/19e59-2019-06-12-xiangsu.png" alt="图像是由像素构成的，每个像素又是由颜色构成的"></p>
+<p>现在随随便便一张图片都是 1000×1000 像素以上的， 每个像素都有RGB 3个参数来表示颜色信息。</p>
+<p>假如我们处理一张 1000×1000 像素的图片，我们就需要处理3百万个参数！</p>
+<p>1000×1000×3&#x3D;3,000,000</p>
+<p>这么大量的数据处理起来是非常消耗资源的，而且这只是一张不算太大的图片！</p>
+<p><strong>卷积神经网络 – CNN 解决的第一个问题就是“将复杂问题简化”，把大量参数降维成少量参数，再做处理。</strong></p>
+<p><strong>更重要的是：我们在大部分场景下，降维并不会影响结果。比如1000像素的图片缩小成200像素，并不影响肉眼认出来图片中是一只猫还是一只狗，机器也是如此。</strong></p>
+<h3 id="1-2保留图像特征"><a href="#1-2保留图像特征" class="headerlink" title="1.2保留图像特征"></a>1.2保留图像特征</h3><p>图片数字化的传统方式我们简化一下，就类似下图的过程：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/98412-2019-06-12-tuxiangtx.png" alt="图像简单数字化无法保留图像特征"></p>
+<p>假如有圆形是1，没有圆形是0，那么圆形的位置不同就会产生完全不同的数据表达。但是从视觉的角度来看，<strong>图像的内容（本质）并没有发生变化，只是位置发生了变化</strong>。</p>
+<p>所以当我们移动图像中的物体，用传统的方式的得出来的参数会差异很大！这是不符合图像处理的要求的。</p>
+<p><strong>而 CNN 解决了这个问题，他用类似视觉的方式保留了图像的特征，当图像做翻转，旋转或者变换位置时，它也能有效的识别出来是类似的图像。</strong></p>
+<p>那么卷积神经网络是如何实现的呢？在我们了解 CNN 原理之前，先来看看人类的视觉原理是什么？</p>
+<h3 id="1-3人类的视觉原理"><a href="#1-3人类的视觉原理" class="headerlink" title="1.3人类的视觉原理"></a>1.3人类的视觉原理</h3><p>深度学习的许多研究成果，离不开对大脑认知原理的研究，尤其是视觉原理的研究。</p>
+<p>1981 年的诺贝尔医学奖，颁发给了 David Hubel（出生于加拿大的美国神经生物学家） 和TorstenWiesel，以及 Roger Sperry。前两位的主要贡献，是“<strong>发现了视觉系统的信息处理</strong>”，可视皮层是分级的。</p>
+<p>人类的视觉原理如下：从原始信号摄入开始（瞳孔摄入像素 Pixels），接着做初步处理（大脑皮层某些细胞发现边缘和方向），然后抽象（大脑判定，眼前的物体的形状，是圆形的），然后进一步抽象（大脑进一步判定该物体是只气球）。下面是人脑进行人脸识别的一个示例：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/dd622-2019-06-24-rennao.png" alt="人类视觉原理1"></p>
+<p>对于不同的物体，人类视觉也是通过这样逐层分级，来进行认知的：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/d447a-2019-06-19-renlei-shijue2.jpg" alt="人类视觉原理2"></p>
+<p>我们可以看到，在最底层特征基本上是类似的，就是各种边缘，越往上，越能提取出此类物体的一些特征（轮子、眼睛、躯干等），到最上层，不同的高级特征最终组合成相应的图像，从而能够让人类准确的区分不同的物体。</p>
+<p>那么我们可以很自然的想到：可以不可以模仿人类大脑的这个特点，构造多层的神经网络，较低层的识别初级的图像特征，若干底层特征组成更上一层特征，最终通过多个层级的组合，最终在顶层做出分类呢？</p>
+<p><strong>答案是肯定的，这也是许多深度学习算法（包括CNN）的灵感来源。</strong></p>
+<h2 id="二-卷积神经网络-CNN-的基本原理"><a href="#二-卷积神经网络-CNN-的基本原理" class="headerlink" title="二.卷积神经网络-CNN 的基本原理"></a>二.卷积神经网络-CNN 的基本原理</h2><p>典型的 CNN 由3个部分构成：</p>
+<ol>
+<li>卷积层</li>
+<li>池化层</li>
+<li>全连接层</li>
+</ol>
+<p>如果简单来描述的话：</p>
+<p>卷积层负责提取图像中的局部特征；池化层用来大幅降低参数量级(降维)；全连接层类似传统神经网络的部分，用来输出想要的结果。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/f1005-2019-06-24-cnnjiegou.png" alt="典型的 CNN 由3个部分构成"></p>
+<p>卷积网络详解：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av28733156/?p=3">https://www.bilibili.com/video/av28733156/?p=3</a></p>
+<h3 id="2-1卷积——提取特征"><a href="#2-1卷积——提取特征" class="headerlink" title="2.1卷积——提取特征"></a>2.1卷积——提取特征</h3><p>卷积层的运算过程如下图，用一个卷积核扫完整张图片：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/f144f-2019-06-19-juanji.gif" alt="卷积层运算过程"></p>
+<p>这个过程我们可以理解为我们使用一个过滤器（卷积核）来过滤图像的各个小区域，从而得到这些小区域的特征值。</p>
+<p>在具体应用中，往往有多个卷积核，可以认为，每个卷积核代表了一种图像模式，如果某个图像块与此卷积核卷积出的值大，则认为此图像块十分接近于此卷积核。如果我们设计了6个卷积核，可以理解：我们认为这个图像上有6种底层纹理模式，也就是我们用6中基础模式就能描绘出一副图像。以下就是25种不同的卷积核的示例：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/63046-2019-06-19-150926.jpg" alt="25种不同的卷积核"></p>
+<p><strong>总结：卷积层的通过卷积核的过滤提取出图片中局部的特征，跟上面提到的人类视觉的特征提取类似。</strong></p>
+<h3 id="2-2池化层（下采样）——数据降维，避免过拟合"><a href="#2-2池化层（下采样）——数据降维，避免过拟合" class="headerlink" title="2.2池化层（下采样）——数据降维，避免过拟合"></a>2.2池化层（下采样）——数据降维，避免过拟合</h3><p>池化层简单说就是下采样，他可以大大降低数据的维度。其过程如下：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3fd53-2019-06-19-chihua.gif" alt="池化层过程"></p>
+<p>上图中，我们可以看到，原始图片是20×20的，我们对其进行下采样，采样窗口为10×10，最终将其下采样成为一个2×2大小的特征图。</p>
+<p>之所以这么做的原因，是因为即使做完了卷积，图像仍然很大（因为卷积核比较小），所以为了降低数据维度，就进行下采样。</p>
+<p><strong>总结：池化层相比卷积层可以更有效的降低数据维度，这么做不但可以大大减少运算量，还可以有效的避免过拟合。</strong></p>
+<h3 id="2-3全连接层——输出结果"><a href="#2-3全连接层——输出结果" class="headerlink" title="2.3全连接层——输出结果"></a>2.3全连接层——输出结果</h3><p>这个部分就是最后一步了，经过卷积层和池化层处理过的数据输入到全连接层，得到最终想要的结果。</p>
+<p>经过卷积层和池化层降维过的数据，全连接层才能”跑得动”，不然数据量太大，计算成本高，效率低下。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/c1a6d-2019-06-19-quanlianjie.png" alt="全连接层"></p>
+<p>典型的 CNN 并非只是上面提到的3层结构，而是多层结构，例如 LeNet-5 的结构就如下图所示：</p>
+<p><strong>卷积层 – 池化层- 卷积层 – 池化层 – 卷积层 – 全连接层</strong></p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/a8f0b-2019-06-19-lenet.png" alt="LeNet-5网络结构"></p>
+<h2 id="三-CNN-有哪些实际应用？"><a href="#三-CNN-有哪些实际应用？" class="headerlink" title="三.CNN 有哪些实际应用？"></a>三.CNN 有哪些实际应用？</h2><p>卷积神经网络 – CNN 很擅长处理图像。而视频是图像的叠加，所以同样擅长处理视频内容。下面给大家列一些比较成熟的应用：</p>
+<p><strong>图像分类、检索</strong></p>
+<p>图像分类是比较基础的应用，他可以节省大量的人工成本，将图像进行有效的分类。对于一些特定领域的图片，分类的准确率可以达到 95%+，已经算是一个可用性很高的应用了。</p>
+<p>典型场景：图像搜索…</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/91e23-2019-06-12-cnn-fenlei.png" alt="CNN应用-图像分类、检索"></p>
+<p><strong>目标定位检测</strong></p>
+<p>可以在图像中定位目标，并确定目标的位置及大小。</p>
+<p>典型场景：自动驾驶、安防、医疗…</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/8b453-2019-06-12-cnn-dingwei-1.png" alt="CNN应用-目标"></p>
+<p><strong>目标分割</strong></p>
+<p>简单理解就是一个像素级的分类。</p>
+<p>他可以对前景和背景进行像素级的区分、再高级一点还可以识别出目标并且对目标进行分类。</p>
+<p>典型场景：美图秀秀、视频后期加工、图像生成…</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/b221a-2019-06-12-cnn-fenge-1.png" alt="CNN应用-目标分割"></p>
+<p><strong>人脸识别</strong></p>
+<p>人脸识别已经是一个非常普及的应用了，在很多领域都有广泛的应用。</p>
+<p>典型场景：安防、金融、生活…</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/460ea-2019-06-12-cnn-renlian.png" alt="CNN应用-人脸识别"></p>
+<p><strong>骨骼识别</strong></p>
+<p>骨骼识别是可以识别身体的关键骨骼，以及追踪骨骼的动作。</p>
+<p>典型场景：安防、电影、图像视频生成、游戏…</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3b80e-2019-06-12-cnn-guge.png" alt="CNN应用-骨骼识别"></p>
+<h2 id="四-总结"><a href="#四-总结" class="headerlink" title="四.总结"></a>四.总结</h2><p>今天我们介绍了 CNN 的价值、基本原理和应用场景，简单总结如下：</p>
+<p><strong>CNN 的价值：</strong></p>
+<ol>
+<li>能够将大数据量的图片有效的降维成小数据量(并不影响结果)</li>
+<li>能够保留图片的特征，类似人类的视觉原理</li>
+</ol>
+<p><strong>CNN 的基本原理：</strong></p>
+<ol>
+<li>卷积层 – 主要作用是保留图片的特征</li>
+<li>池化层 – 主要作用是把数据降维，可以有效的避免过拟合</li>
+<li>全连接层 – 根据不同任务输出我们想要的结果</li>
+</ol>
+<p><strong>CNN 的实际应用：</strong></p>
+<ol>
+<li>图片分类、检索</li>
+<li>目标定位检测</li>
+<li>目标分割</li>
+<li>人脸识别</li>
+<li>骨骼识别</li>
+</ol>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/DINO/">
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/DINO/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 19:53:02" itemprop="dateModified" datetime="2023-11-10T19:53:02+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="DINO"><a href="#DINO" class="headerlink" title="DINO"></a>DINO</h1><p>DINO（Data-IN&#x2F;Data-Out）是一种自监督学习方法，旨在学习无标签图像的表示。DINO的关键思想是通过训练模型来学习图像的表示，而无需使用手动标记的标签。该方法通常用于预训练图像表示，为下游任务提供有用的初始化。</p>
+<p>以下是DINO的一般工作流程：</p>
+<ol>
+<li><strong>无监督训练：</strong> DINO使用无标签的图像数据进行训练。在这个过程中，模型被设计为通过最大化图像间的相似性来自我监督学习。这意味着它不依赖于任何外部监督信号，而是通过比较图像间的相似性来学习图像的表示。</li>
+<li><strong>Contrastive Learning：</strong> DINO采用对比学习（Contrastive Learning）的方法。对比学习的目标是通过最大化相似图像的相似性，并最小化不相似图像的相似性。这通常通过对图像对进行训练，使同一图像的不同视图在嵌入空间中更接近，而不同图像的嵌入点更远。</li>
+<li><strong>Data Augmentation：</strong> 对比学习通常与数据增强相结合，以在训练中引入变化和难度。这有助于模型学到更鲁棒和泛化性能更强的特征。</li>
+</ol>
+<p>DINO的优点之一是其无监督学习框架，使其能够有效地利用大规模无标签图像数据。学到的表示可以用于各种下游任务，如目标检测、图像分类等。不同于传统的监督学习，DINO的方法能够在没有人工标签的情况下进行学习，因此在数据标记成本高昂或者数据缺乏标签的情况下，具有吸引力。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/CLIP%E6%A8%A1%E5%9E%8B%EF%BC%88Contrastive%20Language-Image%20Pre-training%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/CLIP%E6%A8%A1%E5%9E%8B%EF%BC%88Contrastive%20Language-Image%20Pre-training%EF%BC%89/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 11:15:59" itemprop="dateModified" datetime="2023-11-10T11:15:59+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="CLIP模型（Contrastive-Language-Image-Pre-training）"><a href="#CLIP模型（Contrastive-Language-Image-Pre-training）" class="headerlink" title="CLIP模型（Contrastive Language-Image Pre-training）"></a>CLIP模型（Contrastive Language-Image Pre-training）</h1><h2 id="一-核心思想"><a href="#一-核心思想" class="headerlink" title="一. 核心思想"></a>一. 核心思想</h2><p>通过自然语言处理来的一些监督信号，可以去训练一个迁移效果很好的视觉模型。<br>论文的作者团队收集了一个超级大的图像文本配对的数据集，有400 million个图片文本的配对， 模型最大用了ViT-large，提出了CLIP（Contrastive Language-Image Pre-training），是一种从自然语言监督中学习的有效方法。尝试了30个数据集，都能和之前的有监督的模型效果差不多甚至更好。</p>
+<h2 id="二-方法实现"><a href="#二-方法实现" class="headerlink" title="二. 方法实现"></a>二. 方法实现</h2><h3 id="2-1CLIP的训练过程"><a href="#2-1CLIP的训练过程" class="headerlink" title="2.1CLIP的训练过程"></a>2.1CLIP的训练过程</h3><p>模型的输入是图片和文字的配对，图片输入到图片的encoder得到一些特征，文本输入到文本的encoder得到一些特征，每个traning batch里有n个图片-文本对，就能得到n个图片的特征和n个文本的特征，然后在这些特征上做对比学习，对比学习非常灵活，就需要正样本和负样本的定义，其它都是正常套路（不懂对比学习），配对的图片-文本对就是正样本，描述的是同一个东西，特征矩阵里对角线上的都是正样本，矩阵中非对角线上的元素都是负样本，有了正负样本，模型就可以通过对比学习的方式去训练了，不需要任何手工标注。这种无监督的训练方式，是需要大量的训练数据的。</p>
+<h3 id="2-2CLIP的推理过程"><a href="#2-2CLIP的推理过程" class="headerlink" title="2.2CLIP的推理过程"></a>2.2CLIP的推理过程</h3><p>预训练之后只能得到文本和图片的特征，是没有分类头的，作者提出一种利用自然语言的方法，prompt template。比如对于ImageNet的类别，首先把它变成”A photo of a {object}” 这样一个句子，ImageNet有1000个类，就生成1000个句子，然后这1000个句子通过之前预训练好的文本的encoder能得到1000个文本特征。直接用类别单词去抽取文本特征也可以，但是模型预训练的时候和图片配对的都是句子，推理的时候用单词效果会下降。把需要分类的图片送入图片的encoder得到特征，拿图片的特征和1000个文本特征算余弦相似性，选最相似的那个文本特征对应的句子，从而完成了分类任务。不局限于这1000个类别，任何类别都可以。彻底摆脱了categorical label的限制，训练和推理的时候都不需要提前定义好的标签列表了。<br>优点：相比其它的训练方法，从自然语言的监督信号来学习，有几个好处。首先，不需要再去标注数据，比如用传统方法做分类，需要先确定类别，然后去下载图片再清洗，再标注，现在只需要去下载图片和文本的配对，数据集很容易就做大了，现在的监督对象是文本，而不是N选1的标签了。其次，训练的时候把图片和文本绑在了一起，学到的特征不再单是视觉特征了，而是多模态的特征，和语言连在一起以后，就很容易做zero-shot的迁移学习了。</p>
+<h3 id="2-3CLIP的损失函数"><a href="#2-3CLIP的损失函数" class="headerlink" title="2.3CLIP的损失函数"></a>2.3CLIP的损失函数</h3><p>有两个输入，一个是图片，一个是文本，图片的维度是[n,h,w,c]，文本的维度是[n,l]，l是指序列长度，然后送入到各自的encoder提取特征，image encoder可以是ResNet也可以是Vision Transformer，text encoder可以是CBOW，也可以是Text Transformer，得到对应的特征之后，再经过一个投射层（即W_i和W_t)，投射层的意义是学习如何从单模态变成多模态，投射完之后再做l2 norm，就得到了最终的用来对比的特征I_e和T_e，现在有n个图像的特征，和n个文本的特征，接下来就是算consine similarity，算的相似度就是最后要分类的logits，最后logits和ground truth做交叉熵loss，正样本是对角线上的元素，logits的维度是[n,n]，ground truth label是np.arange(n)，算两个loss，一个是image的，一个是text的，最后把两个loss加起来就平均。这个操作在对比学习中是很常见的，都是用的这种对称式的目标函数。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/yolov8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/yolov8/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-18 09:19:02" itemprop="dateModified" datetime="2023-11-18T09:19:02+08:00">2023-11-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="yolov8"><a href="#yolov8" class="headerlink" title="yolov8"></a>yolov8</h1><p>简单来说 YOLOv8 是一个包括了图像分类、Anchor-Free 物体检测和实例分割的高效算法，使用最新的 YOLO 改进算法，实现了新的 SOTA。推出了一个全新的框架。不过这个框架还处于早期阶段，还需要不断完善。</p>
+<p>通过对比 YOLOv5 和 YOLOv8 的 yaml 配置文件可以发现，在不考虑 Head 情况下YOLOv8 的改动还是比较小的（不考虑 Head 情况下）。</p>
+<p>backbone和neck 的改动为：</p>
+<ul>
+<li><p>将所有的 C3 模块换成了C2f（具体结构如下图所示，可以可以发现，新结构里多了更多的跳层连接以及额外的 Split 操作）；</p>
+</li>
+<li><p>去掉了 Neck 模块中的 2 个卷积连接层；</p>
+<p>Head 部分的变化最大，原来是耦合头，现在变成了解耦头，就是从原来的通过相同的网络层同时对边界框定位和分类变为使用不同的网络层分别负责预测边界框的位置和类别，定位YOLOv5是基于Anchor-Based的，YOLOV8变成了 Anchor-Free，直接在特征图上预测物体的中心点以及其宽高。</p>
+</li>
+</ul>
+<p>YOLOV8的head结构如下图所示：</p>
+<p><img src="C:\Users\shish\Desktop\图片1.png" alt="图片1"></p>
+<p>YOLOV8里去掉了objectness 分支，同时也将分类和回归分支进行了解耦，其中的回归分支改用了Distribution Focal Loss 中提出的积分形式的表示法。</p>
+<p>之后我又去看了他的loss计算</p>
+<p><strong>5，Loss 计算</strong></p>
+<p>​    Loss 计算过程包括 2 个部分： 正负样本分配策略和 Loss 计算。</p>
+<p>​    在正负样本分配策略上 YOLOv5 采用的依然是静态分配策略。考虑到动态分配策略的优异性，YOLOv8 考虑到动态分配策略的优异性，则直接引用了 TOOD 的 TaskAlignedAssigner。</p>
+<p>   TaskAlignedAssigner 的匹配策略就是根据分类与回归的分数加权的分数选择正样本。</p>
+<p>   Loss 计算包括 2 个分支：分类和回归分支，没有了之前的 objectness 分支，3 个 Loss 采用一定权重比例加权即可。</p>
+<p>此外我拿yolov8训练了一个用来检测分割细胞的模型，训练集大概三十来张照片，测试集六张，然后模型的效果如下所示，准确率大概0.9，然后从网上down了两张图测试了一下，对于我训练的癌细胞的图片，基本能准确识别。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/Transformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/Transformer/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 09:43:36" itemprop="dateModified" datetime="2023-11-10T09:43:36+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Transformer</p>
+<p>（<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/338817680%EF%BC%89">https://zhuanlan.zhihu.com/p/338817680）</a></p>
+<h2 id="1-Transformer-整体结构"><a href="#1-Transformer-整体结构" class="headerlink" title="1.Transformer 整体结构"></a>1.Transformer 整体结构</h2><p>首先介绍 Transformer 的整体结构，下图是 Transformer 用于中英文翻译的整体结构：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-4544255f3f24b7af1e520684ae38403f_720w.webp" alt="img"></p>
+<p>可以看到 <strong>Transformer 由 Encoder 和 Decoder 两个部分组成</strong>，Encoder 和 Decoder 都包含 6 个 block。Transformer 的工作流程大体如下：</p>
+<p><strong>第一步：</strong>获取输入句子的每一个单词的表示向量 <strong>X</strong>，<strong>X</strong>由单词的 Embedding（Embedding就是从原始数据提取出来的Feature） 和单词位置的 Embedding 相加得到。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7dd39c44b0ae45d31a3ae7f39d3f883f_720w.webp" alt="img"></p>
+<p><strong>第二步：</strong>将得到的单词表示向量矩阵 (如上图所示，每一行是一个单词的表示 <strong>x</strong>) 传入 Encoder 中，经过 6 个 Encoder block 后可以得到句子所有单词的编码信息矩阵 <strong>C</strong>，如下图。单词向量矩阵用 Xn×d 表示， n 是句子中单词个数，d 是表示向量的维度 (论文中 d&#x3D;512)。每一个 Encoder block 输出的矩阵维度与输入完全一致。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-45db05405cb96248aff98ee07a565baa_720w.webp" alt="img"></p>
+<p><strong>第三步</strong>：将 Encoder 输出的编码信息矩阵 <strong>C</strong>传递到 Decoder 中，Decoder 依次会根据当前翻译过的单词 1~ i 翻译下一个单词 i+1，如下图所示。在使用的过程中，翻译到单词 i+1 的时候需要通过 <strong>Mask (掩盖)</strong> 操作遮盖住 i+1 之后的单词。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-5367bd47a2319397317562c0da77e455_720w.webp" alt="img"></p>
+<p>上图 Decoder 接收了 Encoder 的编码矩阵 <strong>C</strong>，然后首先输入一个翻译开始符 “<Begin>“，预测第一个单词 “I”；然后输入翻译开始符 “<Begin>“ 和单词 “I”，预测单词 “have”，以此类推。这是 Transformer 使用时候的大致流程，接下来是里面各个部分的细节。</p>
+<h2 id="2-Transformer-的输入"><a href="#2-Transformer-的输入" class="headerlink" title="2. Transformer 的输入"></a>2. Transformer 的输入</h2><p>Transformer 中单词的输入表示 <strong>x</strong>由<strong>单词 Embedding</strong> 和<strong>位置 Embedding</strong> （Positional Encoding）相加得到。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-b0a11f97ab22f5d9ebc396bc50fa9c3f_720w.webp" alt="img"></p>
+<h3 id="2-1-单词-Embedding"><a href="#2-1-单词-Embedding" class="headerlink" title="2.1 单词 Embedding"></a>2.1 单词 Embedding</h3><p>单词的 Embedding 有很多种方式可以获取，例如可以采用 Word2Vec、Glove 等算法预训练得到，也可以在 Transformer 中训练得到。</p>
+<h3 id="2-2-位置-Embedding"><a href="#2-2-位置-Embedding" class="headerlink" title="2.2 位置 Embedding"></a>2.2 位置 Embedding</h3><p>Transformer 中除了单词的 Embedding，还需要使用位置 Embedding 表示单词出现在句子中的位置。<strong>因为 Transformer 不采用 RNN 的结构，而是使用全局信息，不能利用单词的顺序信息，而这部分信息对于 NLP 来说非常重要。</strong>所以 Transformer 中使用位置 Embedding 保存单词在序列中的相对或绝对位置。</p>
+<p>位置 Embedding 用 <strong>PE</strong>表示，<strong>PE</strong> 的维度与单词 Embedding 是一样的。PE 可以通过训练得到，也可以使用某种公式计算得到。在 Transformer 中采用了后者，计算公式如下：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-8b442ffd03ea0f103e9acc37a1db910a_720w.webp" alt="img"></p>
+<p>其中，pos 表示单词在句子中的位置，d 表示 PE的维度 (与词 Embedding 一样)，2i 表示偶数的维度，2i+1 表示奇数维度 (即 2i≤d, 2i+1≤d)。使用这种公式计算 PE 有以下的好处：</p>
+<ul>
+<li>使 PE 能够适应比训练集里面所有句子更长的句子，假设训练集里面最长的句子是有 20 个单词，突然来了一个长度为 21 的句子，则使用公式计算的方法可以计算出第 21 位的 Embedding。</li>
+<li>可以让模型容易地计算出相对位置，对于固定长度的间距 k，<strong>PE(pos+k)</strong> 可以用 <strong>PE(pos)</strong> 计算得到。因为 Sin(A+B) &#x3D; Sin(A)Cos(B) + Cos(A)Sin(B), Cos(A+B) &#x3D; Cos(A)Cos(B) - Sin(A)Sin(B)。</li>
+</ul>
+<p>将单词的词 Embedding 和位置 Embedding 相加，就可以得到单词的表示向量 <strong>x</strong>，<strong>x</strong> 就是 Transformer 的输入。</p>
+<h2 id="3-Self-Attention（自注意力机制）"><a href="#3-Self-Attention（自注意力机制）" class="headerlink" title="3. Self-Attention（自注意力机制）"></a>3. Self-Attention（自注意力机制）</h2><p><img src="https://pic4.zhimg.com/80/v2-f6380627207ff4d1e72addfafeaff0bb_720w.webp" alt="img"></p>
+<p>上图是论文中 Transformer 的内部结构图，左侧为 Encoder block，右侧为 Decoder block。红色圈中的部分为 <strong>Multi-Head Attention</strong>，是由多个 <strong>Self-Attention</strong>组成的，可以看到 Encoder block 包含一个 Multi-Head Attention，而 Decoder block 包含两个 Multi-Head Attention (其中有一个用到 Masked)。Multi-Head Attention 上方还包括一个 Add &amp; Norm 层，Add 表示残差连接 (Residual Connection) 用于防止网络退化，Norm 表示 Layer Normalization，用于对每一层的激活值进行归一化。</p>
+<p>因为 <strong>Self-Attention</strong>是 Transformer 的重点，所以我们重点关注 Multi-Head Attention 以及 Self-Attention，首先详细了解一下 Self-Attention 的内部逻辑。</p>
+<h3 id="3-1-Self-Attention-结构"><a href="#3-1-Self-Attention-结构" class="headerlink" title="3.1 Self-Attention 结构"></a>3.1 Self-Attention 结构</h3><p><img src="https://pic2.zhimg.com/80/v2-6444601b4c41d99e70569b0ea388c3bd_720w.webp" alt="img"></p>
+<p>上图是 Self-Attention 的结构，在计算的时候需要用到矩阵<strong>Q(查询),K(键值),V(值)<strong>。在实际中，Self-Attention 接收的是输入(单词的表示向量x组成的矩阵X) 或者上一个 Encoder block 的输出。而</strong>Q,K,V</strong>正是通过 Self-Attention 的输入进行线性变换得到的。</p>
+<h3 id="3-2-Q-K-V-的计算"><a href="#3-2-Q-K-V-的计算" class="headerlink" title="3.2 Q, K, V 的计算"></a>3.2 Q, K, V 的计算</h3><p>Self-Attention 的输入用矩阵X进行表示，则可以使用线性变阵矩阵<strong>WQ,WK,WV</strong>计算得到<strong>Q,K,V</strong>。计算如下图所示，<strong>注意 X, Q, K, V 的每一行都表示一个单词。</strong></p>
+<p><img src="https://pic3.zhimg.com/80/v2-4f4958704952dcf2c4b652a1cd38f32e_720w.webp" alt="img"></p>
+<h3 id="3-3-Self-Attention-的输出"><a href="#3-3-Self-Attention-的输出" class="headerlink" title="3.3 Self-Attention 的输出"></a>3.3 Self-Attention 的输出</h3><p>得到矩阵 Q, K, V之后就可以计算出 Self-Attention 的输出了，计算的公式如下：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-9699a37b96c2b62d22b312b5e1863acd_720w.webp" alt="img"></p>
+<p>公式中计算矩阵<strong>Q</strong>和<strong>K</strong>每一行向量的内积，为了防止内积过大，因此除以 dk的平方根。<strong>Q</strong>乘以<strong>K</strong>的转置后，得到的矩阵行列数都为 n，n 为句子单词数，这个矩阵可以表示单词之间的 attention 强度。下图为<strong>Q</strong>乘以 KT ，1234 表示的是句子中的单词。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-9caab2c9a00f6872854fb89278f13ee1_720w.webp" alt="img"></p>
+<p>得到QKT 之后，使用 Softmax 计算每一个单词对于其他单词的 attention 系数，公式中的 Softmax 是对矩阵的每一行进行 Softmax，即每一行的和都变为 1.</p>
+<p><img src="https://pic1.zhimg.com/80/v2-96a3716cf7f112f7beabafb59e84f418_720w.webp" alt="img"></p>
+<p>得到 Softmax 矩阵之后可以和<strong>V</strong>相乘，得到最终的输出<strong>Z</strong>。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7ac99bce83713d568d04e6ecfb31463b_720w.webp" alt="img"></p>
+<p>上图中 Softmax 矩阵的第 1 行表示单词 1 与其他所有单词的 attention 系数，最终单词 1 的输出 Z1 等于所有单词 i 的值 Vi 根据 attention 系数的比例加在一起得到，如下图所示：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-27822b2292cd6c38357803093bea5d0e_720w.webp" alt="img"></p>
+<h3 id="3-4-Multi-Head-Attention"><a href="#3-4-Multi-Head-Attention" class="headerlink" title="3.4 Multi-Head Attention"></a>3.4 Multi-Head Attention</h3><p>在上一步，我们已经知道怎么通过 Self-Attention 计算得到输出矩阵 Z，而 Multi-Head Attention 是由多个 Self-Attention 组合形成的，下图是论文中 Multi-Head Attention 的结构图。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-b0ea8f5b639786f98330f70405e94a75_720w.webp" alt="img"></p>
+<p>从上图可以看到 Multi-Head Attention 包含多个 Self-Attention 层，首先将输入<strong>X</strong>分别传递到 h 个不同的 Self-Attention 中，计算得到 h 个输出矩阵<strong>Z</strong>。下图是 h&#x3D;8 时候的情况，此时会得到 8 个输出矩阵<strong>Z</strong>。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-6bdaf739fd6b827b2087b4e151c560f4_720w.webp" alt="img"></p>
+<p>得到 8 个输出矩阵 Z1 到 Z8 之后，Multi-Head Attention 将它们拼接在一起 <strong>(Concat)<strong>，然后传入一个</strong>Linear</strong>层，得到 Multi-Head Attention 最终的输出<strong>Z</strong>。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-35d78d9aa9150ae4babd0ea6aa68d113_720w.webp" alt="img"></p>
+<p>可以看到 Multi-Head Attention 输出的矩阵<strong>Z</strong>与其输入的矩阵<strong>X</strong>的维度是一样的。</p>
+<h2 id="4-Encoder-结构"><a href="#4-Encoder-结构" class="headerlink" title="4. Encoder 结构"></a>4. Encoder 结构</h2><p><img src="https://pic2.zhimg.com/80/v2-0203e83066913b53ec6f5482be092aa1_720w.webp" alt="img"></p>
+<p>上图红色部分是 Transformer 的 Encoder block 结构，可以看到是由 Multi-Head Attention, <strong>Add &amp; Norm, Feed Forward, Add &amp; Norm</strong> 组成的。刚刚已经了解了 Multi-Head Attention 的计算过程，现在了解一下 Add &amp; Norm 和 Feed Forward 部分。</p>
+<h3 id="4-1-Add-Norm"><a href="#4-1-Add-Norm" class="headerlink" title="4.1 Add &amp; Norm"></a>4.1 Add &amp; Norm</h3><p>Add &amp; Norm 层由 Add 和 Norm 两部分组成，其计算公式如下：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-a4b35db50f882522ee52f61ddd411a5a_720w.webp" alt="img"></p>
+<p>其中 <strong>X</strong>表示 Multi-Head Attention 或者 Feed Forward 的输入，MultiHeadAttention(<strong>X</strong>) 和 FeedForward(<strong>X</strong>) 表示输出 (输出与输入 <strong>X</strong> 维度是一样的，所以可以相加)。</p>
+<p><strong>Add</strong>指 <strong>X</strong>+MultiHeadAttention(<strong>X</strong>)，是一种残差连接，通常用于解决多层网络训练的问题，可以让网络只关注当前差异的部分，在 ResNet 中经常用到：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-4b3dde965124bd00f9893b05ebcaad0f_720w.webp" alt="img"></p>
+<p><strong>Norm</strong>指 Layer Normalization，通常用于 RNN 结构，Layer Normalization 会将每一层神经元的输入都转成均值方差都一样的，这样可以加快收敛。</p>
+<h3 id="4-2-Feed-Forward"><a href="#4-2-Feed-Forward" class="headerlink" title="4.2 Feed Forward"></a>4.2 Feed Forward</h3><p>Feed Forward 层比较简单，是一个两层的全连接层，第一层的激活函数为 Relu，第二层不使用激活函数，对应的公式如下。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-47b39ca4cc3cd0be157d6803c8c8e0a1_720w.webp" alt="img"></p>
+<p>Feed Forward</p>
+<p><strong>X</strong>是输入，Feed Forward 最终得到的输出矩阵的维度与<strong>X</strong>一致。</p>
+<h3 id="4-3-组成-Encoder"><a href="#4-3-组成-Encoder" class="headerlink" title="4.3 组成 Encoder"></a>4.3 组成 Encoder</h3><p>通过上面描述的 Multi-Head Attention, Feed Forward, Add &amp; Norm 就可以构造出一个 Encoder block，Encoder block 接收输入矩阵 �(�×�) ，并输出一个矩阵 �(�×�) 。通过多个 Encoder block 叠加就可以组成 Encoder。</p>
+<p>第一个 Encoder block 的输入为句子单词的表示向量矩阵，后续 Encoder block 的输入是前一个 Encoder block 的输出，最后一个 Encoder block 输出的矩阵就是<strong>编码信息矩阵 C</strong>，这一矩阵后续会用到 Decoder 中。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-45db05405cb96248aff98ee07a565baa_720w.webp" alt="img"></p>
+<p>Encoder 编码句子信息</p>
+<h2 id="5-Decoder-结构"><a href="#5-Decoder-结构" class="headerlink" title="5. Decoder 结构"></a>5. Decoder 结构</h2><p><img src="https://pic3.zhimg.com/80/v2-f5049e8711c3abe8f8938ced9e7fc3da_720w.webp" alt="img"></p>
+<p>Transformer Decoder block</p>
+<p>上图红色部分为 Transformer 的 Decoder block 结构，与 Encoder block 相似，但是存在一些区别：</p>
+<ul>
+<li>包含两个 Multi-Head Attention 层。</li>
+<li>第一个 Multi-Head Attention 层采用了 Masked 操作。</li>
+<li>第二个 Multi-Head Attention 层的<strong>K, V</strong>矩阵使用 Encoder 的<strong>编码信息矩阵C</strong>进行计算，而<strong>Q</strong>使用上一个 Decoder block 的输出计算。</li>
+<li>最后有一个 Softmax 层计算下一个翻译单词的概率。</li>
+</ul>
+<h3 id="5-1-第一个-Multi-Head-Attention"><a href="#5-1-第一个-Multi-Head-Attention" class="headerlink" title="5.1 第一个 Multi-Head Attention"></a>5.1 第一个 Multi-Head Attention</h3><p>Decoder block 的第一个 Multi-Head Attention 采用了 Masked 操作，因为在翻译的过程中是顺序翻译的，即翻译完第 i 个单词，才可以翻译第 i+1 个单词。通过 Masked 操作可以防止第 i 个单词知道 i+1 个单词之后的信息。下面以 “我有一只猫” 翻译成 “I have a cat” 为例，了解一下 Masked 操作。</p>
+<p>下面的描述中使用了类似 Teacher Forcing 的概念，不熟悉 Teacher Forcing 的童鞋可以参考以下上一篇文章Seq2Seq 模型详解。在 Decoder 的时候，是需要根据之前的翻译，求解当前最有可能的翻译，如下图所示。首先根据输入 “<Begin>“ 预测出第一个单词为 “I”，然后根据输入 “<Begin> I” 预测下一个单词 “have”。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-4616451fe8aa59b2df2ead30fa31dc98_720w.webp" alt="img"></p>
+<p>Decoder 预测</p>
+<p>Decoder 可以在训练的过程中使用 Teacher Forcing 并且并行化训练，即将正确的单词序列 (<Begin> I have a cat) 和对应输出 (I have a cat <end>) 传递到 Decoder。那么在预测第 i 个输出时，就要将第 i+1 之后的单词掩盖住，<strong>注意 Mask 操作是在 Self-Attention 的 Softmax 之前使用的，下面用 0 1 2 3 4 5 分别表示 “<Begin> I have a cat <end>“。</strong></p>
+<p><strong>第一步：</strong>是 Decoder 的输入矩阵和 <strong>Mask</strong> 矩阵，输入矩阵包含 “<Begin> I have a cat” (0, 1, 2, 3, 4) 五个单词的表示向量，<strong>Mask</strong> 是一个 5×5 的矩阵。在 <strong>Mask</strong> 可以发现单词 0 只能使用单词 0 的信息，而单词 1 可以使用单词 0, 1 的信息，即只能使用之前的信息。</p>
+<p><strong>第二步：</strong>接下来的操作和之前的 Self-Attention 一样，通过输入矩阵<strong>X</strong>计算得到<strong>Q,K,V</strong>矩阵。然后计算<strong>Q</strong>和 KT(K的转置)的乘积 QKT 。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a63ff9b965595438ed0c0e0547cd3d3b_720w.webp" alt="img"></p>
+<p><strong>第三步：</strong>在得到 QKT 之后需要进行 Softmax，计算 attention score，我们在 Softmax 之前需要使用<strong>Mask</strong>矩阵遮挡住每一个单词之后的信息，遮挡操作如下：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-35d1c8eae955f6f4b6b3605f7ef00ee1_720w.webp" alt="img"></p>
+<p>得到 <strong>Mask</strong> QKT 之后在 <strong>Mask</strong> QKT上进行Softmax，每一行的和都为 1。但是单词 0 在单词 1, 2, 3, 4 上的 attention score 都为 0。</p>
+<p><strong>第四步：</strong>使用 <strong>Mask</strong> QKT与矩阵 <strong>V</strong>相乘，得到输出 <strong>Z</strong>，则单词 1 的输出向量 �1 是只包含单词 1 信息的。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-58f916c806a6981e296a7a699151af87_720w.webp" alt="img"></p>
+<p><strong>第五步：</strong>通过上述步骤就可以得到一个 Mask Self-Attention 的输出矩阵 Zi ，然后和 Encoder 类似，通过 Multi-Head Attention 拼接多个输出Zi 然后计算得到第一个 Multi-Head Attention 的输出<strong>Z</strong>，<strong>Z</strong>与输入<strong>X</strong>维度一样。</p>
+<h3 id="5-2-第二个-Multi-Head-Attention"><a href="#5-2-第二个-Multi-Head-Attention" class="headerlink" title="5.2 第二个 Multi-Head Attention"></a>5.2 第二个 Multi-Head Attention</h3><p>Decoder block 第二个 Multi-Head Attention 变化不大， 主要的区别在于其中 Self-Attention 的 <strong>K, V</strong>矩阵不是使用 上一个 Decoder block 的输出计算的，而是使用 <strong>Encoder 的编码信息矩阵 C</strong> 计算的。</p>
+<p>根据 Encoder 的输出 <strong>C</strong>计算得到 <strong>K, V</strong>，根据上一个 Decoder block 的输出 <strong>Z</strong> 计算 <strong>Q</strong> (如果是第一个 Decoder block 则使用输入矩阵 <strong>X</strong> 进行计算)，后续的计算方法与之前描述的一致。</p>
+<p>这样做的好处是在 Decoder 的时候，每一位单词都可以利用到 Encoder 所有单词的信息 (这些信息无需 <strong>Mask</strong>)。</p>
+<h3 id="5-3-Softmax-预测输出单词"><a href="#5-3-Softmax-预测输出单词" class="headerlink" title="5.3 Softmax 预测输出单词"></a>5.3 Softmax 预测输出单词</h3><p>Decoder block 最后的部分是利用 Softmax 预测下一个单词，在之前的网络层我们可以得到一个最终的输出 Z，因为 Mask 的存在，使得单词 0 的输出 Z0 只包含单词 0 的信息，如下：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-335cfa1b345bdd5cf1e212903bb9b185_720w.webp" alt="img"></p>
+<p>Softmax 根据输出矩阵的每一行预测下一个单词：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-0938aa45a288b5d6bef6487efe53bd9d_720w.webp" alt="img"></p>
+<p>这就是 Decoder block 的定义，与 Encoder 一样，Decoder 是由多个 Decoder block 组合而成。</p>
+<h2 id="6-Transformer-总结"><a href="#6-Transformer-总结" class="headerlink" title="6. Transformer 总结"></a>6. Transformer 总结</h2><ul>
+<li>Transformer 与 RNN 不同，可以比较好地并行训练。</li>
+<li>Transformer 本身是不能利用单词的顺序信息的，因此需要在输入中添加位置 Embedding，否则 Transformer 就是一个词袋模型了。</li>
+<li>Transformer 的重点是 Self-Attention 结构，其中用到的 <strong>Q, K, V</strong>矩阵通过输出进行线性变换得到。</li>
+<li>Transformer 中 Multi-Head Attention 中有多个 Self-Attention，可以捕获单词之间多种维度上的相关系数 attention score。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/softmax%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/softmax%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 15:06:53" itemprop="dateModified" datetime="2023-11-09T15:06:53+08:00">2023-11-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105722023">https://zhuanlan.zhihu.com/p/105722023</a></p>
+<p>对于二分类问题来说，除了可以使用单个输出节点表示事件A发生的概率 P(A|x) 外，还可以分别预测 P(A|x) 和 P(A¯|x) ，并满足约束：P(A|x) + P(A¯|x) &#x3D;1 。其中 A¯ 表示事件A的对立事件。</p>
+<p><strong>当然可以将输出为两个节点的二分类推广成拥有n个输出节点的n分类问题。</strong></p>
+<p>有没有将各个输出节点的输出值范围映射到[0, 1]，并且约束各个输出节点的输出值的和为1的函数呢？</p>
+<p>当然，这个函数就是Softmax函数。</p>
+<p>Softmax从字面上来说，可以分成soft和max两个部分。max故名思议就是最大值的意思。Softmax的核心在于soft，而soft有软的含义，与之相对的是hard硬。很多场景中需要我们找出数组所有元素中值最大的元素，实质上都是求的hardmax。下面使用Numpy模块以及TensorFlow深度学习框架实现hardmax。</p>
+<p>例如：</p>
+<p>使用Numpy模块实现hardmax：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">a = np.array([1, 2, 3, 4, 5]) # 创建ndarray数组</span><br><span class="line">a_max = np.max(a)</span><br><span class="line">print(a_max) # 5</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的例子可以看出hardmax最大的特点就是只选出其中一个最大的值，即非黑即白。但是往往在实际中这种方式是不合情理的，比如对于文本分类来说，一篇文章或多或少包含着各种主题信息，我们更期望得到文章对于每个可能的文本类别的概率值（置信度），可以简单理解成属于对应类别的可信度。所以此时用到了soft的概念，Softmax的含义就在于不再唯一的确定某一个最大值，而是为每个输出分类的结果都赋予一个概率值，表示属于每个类别的可能性。</p>
+<p>下面给出Softmax函数的定义（以第i个节点输出为例）：<img src="D:\新建文件夹\论文精读\softmax.png"></p>
+<p>，其中 Zi 为第i个节点的输出值，C为输出节点的个数，即分类的类别个数。通过Softmax函数就可以将多分类的输出值转换为范围在[0, 1]和为1的概率分布。</p>
+<p>引入指数函数对于Softmax函数是把双刃剑，即得到了优点也暴露出了缺点：</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/SAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/SAM/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 14:13:14" itemprop="dateModified" datetime="2023-11-09T14:13:14+08:00">2023-11-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>SAM</p>
+<p>在数据集上预训练的大语言模型具有强大的zero-shot(零样本)和few-shot(少样本)的泛化能力，这些”基础模型”可以推广到超出训练过程中的任务和数据分布，这种能力通过“prompt engineering”实现，具体就是输入提示语得到有效的文本输出，使用网络上的大量文本资料库进行缩放和训练后，发现这种零样本和少样本的训练的模型比微调模型效果还要好，数据集越大，效果越明显。<br>视觉任务上也对这种基础模型进行了探索，比如CLIP和ALIGN利用对比学习，将文本和图像编码进行了对齐，通过提示语生成image encoder，就可以扩展到下游任务，比如生成图像。<br>论文的目的是建立一个图像分割的基础模型，开发一个具有提示能力的模型。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/RNN(%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/RNN(%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 16:08:46" itemprop="dateModified" datetime="2023-11-09T16:08:46+08:00">2023-11-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="RNN-循环神经网络"><a href="#RNN-循环神经网络" class="headerlink" title="RNN(循环神经网络)"></a>RNN(循环神经网络)</h1><h2 id="一-为什么需要-RNN-？独特价值是什么？"><a href="#一-为什么需要-RNN-？独特价值是什么？" class="headerlink" title="一.为什么需要 RNN ？独特价值是什么？"></a>一.为什么需要 RNN ？独特价值是什么？</h2><p>卷积神经网络 – <a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/cnn/">CNN</a> 和普通的算法大部分都是输入和输出的一一对应，也就是一个输入得到一个输出。不同的输入之间是没有联系的。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/46b63-2019-07-04-input-output.png" alt="大部分算法都是输入和输出的一一对应"></p>
+<p>但是在某些场景中，一个输入就不够了！</p>
+<p>为了填好下面的空，取前面任何一个词都不合适，我们不但需要知道前面所有的词，还需要知道词之间的顺序。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/b68f4-2019-07-04-tiankong.png" alt="序列数据的处理"></p>
+<p><strong>这种需要处理“序列数据 – 一串相互依赖的数据流”的场景就需要使用 RNN 来解决了。</strong></p>
+<p>典型的集中序列数据：</p>
+<ol>
+<li>文章里的文字内容</li>
+<li>语音里的音频内容</li>
+<li>股票市场中的价格走势</li>
+<li>……</li>
+</ol>
+<p>RNN 之所以能够有效的处理序列数据，主要是基于他的比较特殊的运行原理。</p>
+<h2 id="二-RNN-的基本原理"><a href="#二-RNN-的基本原理" class="headerlink" title="二.RNN 的基本原理"></a>二.RNN 的基本原理</h2><p>传统神经网络的结构比较简单：输入层 – 隐藏层 – 输出层。如下图所示：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/6015f-2019-07-02-chuantong.png" alt="传统神经网络"></p>
+<p>RNN 跟传统神经网络最大的区别在于每次都会将前一次的输出结果，带到下一次的隐藏层中，一起训练。如下图所示：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/f0116-2019-07-02-rnn-1.gif" alt="RNN区别"></p>
+<p>下面用一个具体的案例来看看 RNN 是如何工作的：</p>
+<p>假如需要判断用户的说话意图（问天气、问时间、设置闹钟…），用户说了一句“what time is it？”我们需要先对这句话进行分词：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/bf30b-2019-07-02-fenci.gif" alt="对输入进行分词"></p>
+<p>然后按照顺序输入 RNN ，我们先将 “what”作为 RNN 的输入，得到输出“01”</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/eb691-2019-07-02-input-what.gif" alt="输入what，得到输出01"></p>
+<p>然后，我们按照顺序，将“time”输入到 RNN 网络，得到输出“02”。</p>
+<p>这个过程我们可以看到，输入 “time” 的时候，<strong>前面 “what” 的输出也产生了影响（隐藏层中有一半是黑色的）。</strong></p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/4d052-2019-07-02-input-time.gif" alt="img"></p>
+<p>以此类推，前面所有的输入都对未来的输出产生了影响，大家可以看到圆形隐藏层中包含了前面所有的颜色。如下图所示：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/575e2-2019-07-02-input-5.gif" alt="RNN 对前面输入有“记忆”作用的体现"></p>
+<p>当我们判断意图的时候，只需要最后一层的输出“05”，如下图所示：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3877f-2019-07-02-output.gif" alt="RNN 最后一层的输出是我们最终想要的"></p>
+<p><strong>RNN 的缺点也比较明显</strong></p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/697a8-2019-07-02-010144.jpg" alt="隐藏层中的颜色分布"></p>
+<p>通过上面的例子，我们已经发现，短期的记忆影响较大（如橙色区域），但是长期的记忆影响就很小（如黑色和绿色区域），这就是 RNN 存在的短期记忆问题。</p>
+<ol>
+<li>RNN 有短期记忆问题，无法处理很长的输入序列</li>
+<li>训练 RNN 需要投入极大的成本</li>
+</ol>
+<p>由于 RNN 的短期记忆问题，后来又出现了基于 RNN 的优化算法，下面给大家简单介绍一下。</p>
+<h2 id="三-RNN-的优化算法"><a href="#三-RNN-的优化算法" class="headerlink" title="三.RNN 的优化算法"></a>三.RNN 的优化算法</h2><h2 id="3-1LSTM-长短期记忆网络"><a href="#3-1LSTM-长短期记忆网络" class="headerlink" title="3.1LSTM( 长短期记忆网络)"></a>3.1LSTM( 长短期记忆网络)</h2><h3 id="3-1-1RNN-到-LSTM-–-长短期记忆网络"><a href="#3-1-1RNN-到-LSTM-–-长短期记忆网络" class="headerlink" title="3.1.1RNN 到 LSTM – 长短期记忆网络"></a>3.1.1RNN 到 LSTM – 长短期记忆网络</h3><p>RNN 是一种死板的逻辑，越晚的输入影响越大，越早的输入影响越小，且无法改变这个逻辑。</p>
+<p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/lstm/">LSTM</a> 做的最大的改变就是打破了这个死板的逻辑，而改用了一套灵活了逻辑——只保留重要的信息。</p>
+<p><strong>简单说就是：抓重点！</strong></p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/933c5-2019-07-04-rnn-lstm.png" alt="RNN的序列逻辑到LSTM的抓重点逻辑"></p>
+<p>举个例子，我们先快速的阅读下面这段话：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/4e81a-2019-07-03-pinglun.png" alt="快速阅读这段话"></p>
+<p>当我们快速阅读完之后，可能只会记住下面几个重点：</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/5a1a2-2019-07-03-pinglun-hzd.png" alt="划重点"></p>
+<p>LSTM 类似上面的划重点，<strong>他可以保留较长序列数据中的“重要信息”，忽略不重要的信息</strong>。这样就解决了 RNN 短期记忆的问题。</p>
+<h3 id="3-1-2什么是-LSTM？"><a href="#3-1-2什么是-LSTM？" class="headerlink" title="3.1.2什么是 LSTM？"></a>3.1.2什么是 LSTM？</h3><p>长短期记忆网络——通常被称为 LSTM，是一种特殊的 <a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/rnn/">RNN</a>，能够学习长期依赖性。由 Hochreiter 和 Schmidhuber（1997）提出的，并且在接下来的工作中被许多人改进和推广。LSTM 在各种各样的问题上表现非常出色，现在被广泛使用。</p>
+<p>LSTM 被明确设计用来避免长期依赖性问题。长时间记住信息实际上是 LSTM 的默认行为，而不是需要努力学习的东西！</p>
+<p>所有递归神经网络都具有神经网络的链式重复模块。在标准的 RNN 中，这个重复模块具有非常简单的结构，例如只有单个 tanh 层。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3e151-2019-07-05-rnn-tanh.png" alt="RNN中，只有单个tanh层"></p>
+<p>LSTM 也具有这种类似的链式结构，但重复模块具有不同的结构。不是一个单独的神经网络层，而是四个，并且以非常特殊的方式进行交互。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3bec9-2019-07-05-lstm.png" alt="LSTM有4个神经网络层"></p>
+<p>不要担心细节。稍后我们将逐步浏览 LSTM 的图解。现在，让我们试着去熟悉我们将使用的符号。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/ccc12-2019-07-05-fuhao.png" alt="不同符号的含义"></p>
+<p>在上面的图中，每行包含一个完整的向量，从一个节点的输出到其他节点的输入。粉色圆圈表示逐点运算，如向量加法；而黄色框表示学习的神经网络层。行合并表示串联，而分支表示其内容正在被复制，并且副本将转到不同的位置。</p>
+<h3 id="3-1-3LSTM的核心思路"><a href="#3-1-3LSTM的核心思路" class="headerlink" title="3.1.3LSTM的核心思路"></a>3.1.3LSTM的核心思路</h3><p>LSTM 的关键是细胞状态，即图中上方的水平线。</p>
+<p>细胞状态有点像传送带。它贯穿整个链条，只有一些次要的线性交互作用。信息很容易以不变的方式流过。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/3517f-2019-07-05-xibao.png" alt="LSTM 的关键是细胞状态，即图中上方的水平线"></p>
+<p>LSTM 可以通过所谓“门”的精细结构向细胞状态添加或移除信息。</p>
+<p>门可以选择性地以让信息通过。它们由 S 形神经网络层和逐点乘法运算组成。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/bd853-2019-07-05-men.png" alt="LSTM 可以通过所谓“门”的精细结构向细胞状态添加或移除信息"></p>
+<p>S 形网络的输出值介于 0 和 1 之间，表示有多大比例的信息通过。0 值表示“没有信息通过”，1 值表示“所有信息通过”。</p>
+<p>一个 LSTM 有三种这样的门用来保持和控制细胞状态。</p>
+<h2 id="3-2从-LSTM-到-GRU"><a href="#3-2从-LSTM-到-GRU" class="headerlink" title="3.2从 LSTM 到 GRU"></a>3.2从 LSTM 到 GRU</h2><p>Gated Recurrent Unit – GRU 是 LSTM 的一个变体。他保留了 LSTM 划重点，遗忘不重要信息的特点，在long-term 传播的时候也不会被丢失。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/6839b-2019-07-03-lstm-gru.png" alt="GRU 主要是在LSTM的模型上做了一些简化和调整"></p>
+<p>GRU 主要是在 LSTM 的模型上做了一些简化和调整，在训练数据集比较大的情况下可以节省很多时间。</p>
+<h2 id="四-RNN-的应用和使用场景"><a href="#四-RNN-的应用和使用场景" class="headerlink" title="四.RNN 的应用和使用场景"></a>四.RNN 的应用和使用场景</h2><p>只要涉及到序列数据的处理问题，都可以使用到，<a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/nlp/">NLP</a> 就是一个典型的应用场景。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/b3243-2019-07-04-yingyong.png" alt="RNN的应用和使用场景"></p>
+<p><strong>文本生成</strong>：类似上面的填空题，给出前后文，然后预测空格中的词是什么。</p>
+<p><strong>机器翻译</strong>：翻译工作也是典型的序列问题，词的顺序直接影响了翻译的结果。</p>
+<p><strong>语音识别</strong>：根据输入音频判断对应的文字是什么。</p>
+<p><strong>生成图像描述</strong>：类似看图说话，给一张图，能够描述出图片中的内容。这个往往是 RNN 和 CNN 的结合。</p>
+<p><img src="https://easyai.tech/wp-content/uploads/2022/08/69b01-2019-07-04-kantu.png" alt="生成图像描述"></p>
+<p><strong>视频标记</strong>：他将视频分解为图片，然后用图像描述来描述图片内容。</p>
+<h2 id="五-总结"><a href="#五-总结" class="headerlink" title="五.总结"></a>五.总结</h2><p>RNN的独特价值在于：它能有效的处理序列数据。比如：文章内容、语音音频、股票价格走势…</p>
+<p>之所以他能处理序列数据，是因为在序列中前面的输入也会影响到后面的输出，相当于有了“记忆功能”。但是 RNN 存在严重的短期记忆问题，长期的数据影响很小（哪怕他是重要的信息）。</p>
+<p>于是基于 RNN 出现了 LSTM 和 GRU 等变种算法。这些变种算法主要有几个特点：</p>
+<ol>
+<li>长期信息可以有效的保留</li>
+<li>挑选重要信息保留，不重要的信息会选择“遗忘”</li>
+</ol>
+<p>RNN 几个典型的应用如下：</p>
+<ol>
+<li>文本生成</li>
+<li>语音识别</li>
+<li>机器翻译</li>
+<li>生成图像描述</li>
+<li>视频标记</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/Grounding%20%E4%BB%BB%E5%8A%A1/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 15:43:21" itemprop="dateModified" datetime="2023-11-10T15:43:21+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Grounding-任务"><a href="#Grounding-任务" class="headerlink" title="Grounding 任务"></a>Grounding 任务</h1><h2 id="一、Grounding简介"><a href="#一、Grounding简介" class="headerlink" title="一、Grounding简介"></a>一、Grounding简介</h2><p>Grounding 任务是指将自然语言文本与视觉场景之间进行对齐或连接的任务。在这个任务中，文本描述和视觉信息需要建立联系，以实现跨模态的理解和交互。</p>
+<p>Grounding 任务可以包括以下几种类型：</p>
+<p>图像描述生成：这个任务要求从给定的图像中生成相应的文本描述。模型需要将图像的视觉信息转化为自然语言的表达形式，使其能够准确地描述图像的内容和特征。<br>视觉问答：在这个任务中，给定一个图像和一个与之相关的问题，模型需要理解问题的含义，并从图像中获取所需的信息来回答问题。这要求模型将问题中的语义与图像中的视觉内容进行连接。<br>图像标注：这个任务要求给定一张图像，模型需要生成与图像内容相关的标注或描述。模型需要理解图像中的场景、对象和动作等信息，并生成与之对应的文本标注。<br>视觉指代消解：在这个任务中，给定一段文本和图像，模型需要理解文本中的指代（如代词、名词短语）所指向的具体图像区域。这要求模型将文本中的指代与图像中的实体进行对应。<br>视觉关系预测：这个任务要求模型理解图像中不同对象之间的关系，并从文本描述中预测出这些关系。模型需要将视觉信息和文本信息进行对齐，以准确地识别和预测对象之间的关联。<br>Grounding 任务对于实现跨模态的理解和交互非常重要。通过解决这些任务，可以促进自然语言处理和计算机视觉之间的融合，进一步推动智能系统在理解和处理多模态数据方面的能力。</p>
+<p>二、word-region 级别的 grounding 任务<br>Word-region 级别的 grounding 任务是一种将自然语言单词与图像中的特定区域对应起来的任务。在这个任务中，给定一个自然语言描述和一张图像，模型需要确定描述中的每个单词与图像中的哪个区域或对象相对应。</p>
+<p>这种任务可以用于构建更精细的文本与图像之间的对齐，实现更细粒度的视觉与语言交互。下面是一些常见的 word-region 级别的 grounding 任务：</p>
+<p>单词级别的 grounding：在这个任务中，给定一个自然语言描述和图像，模型需要确定每个单词与图像中的哪个区域或对象对应。例如，对于一个描述”在图像中，有一只蓝色的小猫坐在椅子上”，模型需要将单词”蓝色”与图像中蓝色的区域、单词”小猫”与图像中猫的区域以及单词”椅子”与图像中椅子的区域对应起来。<br>短语级别的 grounding：这个任务要求模型将连续的单词或短语与图像中的一组区域或对象进行对应。例如，对于一个描述”在图像中，有一辆红色的汽车和一栋高楼”，模型需要将短语”红色的汽车”与图像中红色汽车的区域以及短语”高楼”与图像中高楼的区域对应起来。<br>实体级别的 grounding：在这个任务中，给定一个自然语言描述和图像，模型需要将描述中的具体实体与图像中相应的实体区域对应起来。例如，对于一个描述”图像中的篮球运动员正在投篮”，模型需要将”篮球运动员”这个实体与图像中的篮球运动员的区域对应起来。<br>word-region 级别的 grounding 任务可以用于图像标注、视觉问答、图像检索等多种视觉与语言交互的任务中。它对于理解文本描述和图像之间的语义关系以及实现更细粒度的视觉与语言对齐具有重要意义。</p>
+<p>三、MLM、ITM代理任务<br>MLM 和 ITM 是自然语言处理（NLP）中的两种代理任务，用于预训练模型（如 BERT、GPT）的训练过程中。</p>
+<p>MLM（Masked Language Modeling，遮蔽语言建模）：MLM 是一种基于掩码的预测任务，旨在让模型学会填补被遮蔽的文本片段。在训练过程中，输入的文本序列中的某些单词会被随机选择并遮蔽掉，然后模型需要根据上下文信息来预测这些被遮蔽的单词。模型在预测遮蔽单词时，可以利用上下文中的其他单词来获取语义和语法上的线索。MLM 旨在使模型学习到单词的上下文表示以及语义关系，从而提高模型在下游任务中的表现。<br>ITM（Image-Text Matching，图像-文本匹配）：ITM 是一种跨模态的匹配任务，旨在训练模型将图像和文本进行对齐。在ITM任务中，模型接收一对图像和文本作为输入，然后需要判断它们之间的相关性或匹配程度。模型需要学习将图像和文本嵌入空间中的表示进行对齐，以便能够准确地匹配图像和与之相关的文本。ITM 任务可以用于图像标注、视觉问答和图像检索等多种视觉与语言交互任务中。<br>这两个代理任务通常作为预训练模型的训练目标，通过大规模的文本和图像数据进行联合训练，使模型能够学习到更丰富的语义表示和跨模态的对齐能力。预训练模型在完成 MLM 和 ITM 任务后，可以通过微调或在下游任务中使用这些学到的表示来提升各种自然语言处理和计算机视觉任务的性能。</p>
+<h2 id="二、visual-grounding任务简介"><a href="#二、visual-grounding任务简介" class="headerlink" title="二、visual grounding任务简介"></a>二、visual grounding任务简介</h2><p>visual grounding涉及计算机视觉和自然语言处理两个模态。简要来说，输入是图片（image）和对应的物体描述（sentence\caption\description），输出是描述物体的box。听上去和目标检测非常类似，区别在于输入多了语言信息，在对物体进行定位时，要先对语言模态的输入进行理解，并且和视觉模态的信息进行融合，最后利用得到的特征表示进行定位预测。visual grounding按照是否要对语言描述中<strong>所有</strong>提及的物体进行定位，可以进一步划分为两个任务：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-7b70bc86fc5f84d9dd34eac1a4a44074_720w.webp" alt="img"></p>
+<p>1.Phrase Localization：又称为Phrase Grounding，如上图，对于给定的sentence，要定位其中提到的全部物体（phrase），在数据集中对于所有的phrase都有box标注。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-f8407d99e960d1769eb349f008654db1_720w.webp" alt="img"></p>
+<p>2.Referring Expression Comprehension（REC）：也称为Referring expression grounding。见上图，每个语言描述（这里是expression）只指示一个物体，每句话即使有上下文物体，也只对应一个指示物体的box标注。</p>
+<h2 id="三、visual-grounding常用数据集与评估指标"><a href="#三、visual-grounding常用数据集与评估指标" class="headerlink" title="三、visual grounding常用数据集与评估指标"></a>三、visual grounding常用数据集与评估指标</h2><p>1.Phrase Localization：常用的数据集即Flickr30k Entities数据集[1]，包含31783张image，每张图会对应5个不同的caption，所以总共158915个caption，以及244035个phrase-box标注。对于每个phrase还细分为people, clothing, body parts, animals, vehicles, instruments, scene, othera八个不同的类别。</p>
+<p>另外很多phrase localization的工作还会在ReferItGame数据集[2]（又称RefCLEF）上进行实验，这个数据集严格来说应该属于REC任务。图片来自ImageCLEF数据集，包含130525个expression，涉及238个不同的物体种类，有96654个物体，19894张图像。其中的数据是通过一种称为refer it game的双人游戏进行标注的，如下图：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-a684d67a3c39f5939e98f362db842122_720w.webp" alt="img"></p>
+<p>左侧的人根据region来写expression，右侧的人根据expression选择region。</p>
+<p>\2. Referring expression comprehension：常用的有三个数据集RefCOCO[3], RefCOCO+[3], RefCOCOg[4]。这三个数据集的区别可以通过下面的样例理解：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-953710dde71e48e3f8c726ad388b384d_720w.webp" alt="img"></p>
+<p><strong>标注方式上：</strong></p>
+<ul>
+<li>RefCOCOg采用的是非交互式标注法，选定区域请人标注，再请另外一批人根据标注的expression选择对应的region；</li>
+<li>RefCOCO和RefCOCO+采用的是双人游戏 (Refer it game)的方式.</li>
+</ul>
+<p><strong>数据划分方式上：</strong></p>
+<ul>
+<li>RefCOCO和RefCOCO+包含train, val, testA, testB。testA的图片包含多个人；testB的图片包含多个除人之外的物体。<strong>同一个图片的object-expression样本对要么全在训练集，要么全在验证\测试集</strong>。</li>
+<li>RefCOCOg包含train, val, test。是按照object进行划分的，<strong>同一个图片的object-expression样本对集合可能会在训练集一部分，在验证\测试集另一部分</strong>。</li>
+</ul>
+<p><strong>图片选择上：</strong></p>
+<ul>
+<li>RefCOCO：图像包含同一类别的多个物体。</li>
+<li>RefCOCO+：图像包含同一类别的多个物体，并且expression不能有绝对位置（e.g., left）的词。</li>
+<li>RefCOCOg：图像包含同一类别的2-4个物体，覆盖面积超过图片面积的5%</li>
+</ul>
+<p><strong>评估指标：</strong></p>
+<ol>
+<li>prediction box和groud-truth box的交并比（intersection over union，IoU）大于0.5记为一次正确定位，以此来计算准确率（Accuracy）。最近的一些工作使用Recall@k指标，表示预测概率前k大的prediction box和ground-truth box的IoU大于0.5的定位准确率。</li>
+<li>Pointing game，选择最终预测的attention mask中权重最大的像素位置，如果该点落在ground-truth区域内，记为一次正确定位。相比Acc指标更加宽松。</li>
+</ol>
+<h2 id="四、visual-grounding主流做法"><a href="#四、visual-grounding主流做法" class="headerlink" title="四、visual grounding主流做法"></a>四、visual grounding主流做法</h2><p>目前visual grounding可以分为全监督（Fully-supervised）、弱监督（Weakly-supervised）、无监督（Unsupervised）三种。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-1e3503186ed097e826183acf655ee0f6_720w.webp" alt="img"></p>
+<ul>
+<li>全监督（Fully-supervised）：顾名思义，就是有object-phrase的box标注信息。</li>
+<li>弱监督（Weakly-supervised）：输入只有image和对应的sentence，<strong>没有</strong>sentence中的object-phrase的box标注。</li>
+<li>无监督（Unsupervised）：image-sentence的信息都没有。目前据我所知，只有ICCV2019的WPT[5]是无监督，非常有意思，结果也很有比较价值。</li>
+</ul>
+<p>这里再简要扩展一下全监督和弱监督的主要做法，后续的文章会详细对每篇工作进行梳理。</p>
+<ul>
+<li>全监督中，现在的做法可以分为<strong>two-stage和one-stage</strong>两种做法。two-stage就是第一个阶段先通过RPN或者传统的算法（Edgebox、SelectiveSearch）等提取候选的proposals以及它们的features，然后在第二个阶段进行详细的推理，例如常见的做法是把视觉特征和语言特征投射到一个<strong>公共的向量空间</strong>，计算相似度，选择最相近的proposal作为预测结果。one-stage则是基于目标检测领域的one-stage模型，例如YOLO、RetinaNet等。</li>
+<li>弱监督由于缺少phrase和box之间的mapping，会额外设计很多损失函数，例如基于reconstruction，引入external knowledge，基于image-caption匹配设计loss的等等。这里推荐一篇CVPR2021弱监督工作[6]，很有学习价值~</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/28/Grounded-SAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="胜强">
+      <meta itemprop="description" content="成功的路上并不拥挤">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩老魔">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/28/Grounded-SAM/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-28 15:20:58" itemprop="dateCreated datePublished" datetime="2023-11-28T15:20:58+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 20:38:25" itemprop="dateModified" datetime="2023-11-10T20:38:25+08:00">2023-11-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Grounded-SAM"><a href="#Grounded-SAM" class="headerlink" title="Grounded-SAM"></a>Grounded-SAM</h1><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h2><p>具体来说，他们使用一个 SOTA 的 zero-shot 目标检测器（Grounding DINO）提取物体 box 和类别，然后输入给 SAM 模型出 mask，使得模型可以根据文本输入检测来分割任意物体。另外，他们还将其和 Stable Diffusion 结合做可控的图像编辑。</p>
+<p>这个功能是实现自动数据标注，包括标签信息及预测概率，有点类似于 YOLOV8 系列，借助 SAM 分割万物的思想可以直接对图片中的所有场景进行分割及分类标注。</p>
+<h2 id="1-1-主要功能"><a href="#1-1-主要功能" class="headerlink" title="1.1 主要功能"></a>1.1 主要功能</h2><h3 id="1-1-1-功能一"><a href="#1-1-1-功能一" class="headerlink" title="1.1.1 功能一"></a>1.1.1 功能一</h3><p>使用 Tag2Text 直接生成标签，使用 Grounded-SAM 进行 box 和 mask 生成。Tag2Text 具有卓越的标记和字幕功能。使用 BLIP 生成标题，使用 chatGPT 提取标签，使用 Ground-SAM 生成框和 MASK 图片。</p>
+<h3 id="1-1-2-功能二"><a href="#1-1-2-功能二" class="headerlink" title="1.1.2 功能二"></a>1.1.2 功能二</h3><p>这个功能主要是通过 <strong>whisper</strong> 模块对语音进行转换，直接对图片的检测对象进行替换。</p>
+<p>Segment Anything 是一个强大的细分模型。 但它需要提示（如框&#x2F;点）来生成掩码。<br>Grounding DINO 是一种强大的 zero-shot 检测器，能够生成带有自由格式文本的高质量框和标签。<br>Grounding DINO + SAM 的组合能够通过文本输入检测和分割任何级别的所有内容！<br>BLIP + Grounding DINO + SAM 组合自动贴标系统！<br>Grounding DINO + SAM + Stable-diffusion 数据工厂的组合，生成新数据！<br>Whisper + Grounding DINO + SAM 的组合，可以检测和分割任何有语音的东西！</p>
+<p>演示一下主要功能-grounded-sam</p>
+<h2 id="二-SAM"><a href="#二-SAM" class="headerlink" title="二.SAM"></a>二.SAM</h2><h3 id="2-1-目的"><a href="#2-1-目的" class="headerlink" title="2.1 目的"></a>2.1 目的</h3><p>SAM的目的是建立一个图像分割的基础模型，开发一个具有提示能力的模型。</p>
+<p>这些”基础模型”可以推广到超出训练过程中的任务和数据分布，这种能力通过“prompt engineering”实现，具体就是输入提示语得到有效的文本输出。使用大量文本数据进行缩放和训练后，发现这种零样本和少样本的训练的模型比微调模型效果还要好，数据集越大，效果越明显。</p>
+<p>模型要支持灵活的提示，且要实时生成mask,对输出也是模糊的(比如表示衣服还是穿衣服的人)，设计结构如下：一个prompt encoder，对提示进行编码，image encoder对图像编码，生成embedding, 最后融合2个encoder，再接一个轻量的mask decoder，输出最后的mask。</p>
+<p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112011303.png" alt="image-20231110112011303"></p>
+<p>视觉任务上比如CLIP，将文本和图像编码进行了对齐，通过提示语生成image encoder，就可以扩展到下游任务，比如生成图像。</p>
+<h3 id="2-2模型"><a href="#2-2模型" class="headerlink" title="2.2模型"></a>2.2模型</h3><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110103004867.png" alt="image-20231110103004867"></p>
+<h4 id="2-2-1-image-encoder"><a href="#2-2-1-image-encoder" class="headerlink" title="2.2.1 image encoder"></a>2.2.1 image encoder</h4><p>利用MAE(Masked AutoEncoder)预训练的Transformer（vit），最低限度适应高分辨率的输入，该encoder在prompt encoder之前，对每张图像只运行一次。输入(c,h,w)三通道的图像，对图像进行缩放，按照长边缩放成1024，短边不够就pad,得到(c,1024,1024)的图像，经过image encoder，得到对图像16倍下采样的feature，大小为(256,64,64)。</p>
+<h4 id="2-2-2-prompt-encoder"><a href="#2-2-2-prompt-encoder" class="headerlink" title="2.2.2 prompt encoder"></a>2.2.2 prompt encoder</h4><ul>
+<li><p>分成2类：稀疏的(点，box，文本)，稠密的（mask）</p>
+</li>
+<li><ul>
+<li>point:映射到256维的向量，包含代表点位置的 positional encoding，加2个代表该点是前景&#x2F;背景的可学习的embedding。</li>
+<li>box:用一个embedding对表示（1）可学习的embedding代表左上角（2）可学习的embedding代表右下角</li>
+<li>文本：通过CLIP模型进行文本编码</li>
+<li>mask:用输入图像1&#x2F;4分辨率的mask，然后用(2,2)卷积核，stride-2输出channel为4和16，再用(1,1)卷积核将channel升到256. mask 和image  embedding通过element-wise相乘(逐元素相乘，可以理解成mask的feature对image的feature进行加权)</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-mask-decoder"><a href="#2-2-3-mask-decoder" class="headerlink" title="2.2.3 mask decoder"></a>2.2.3 mask decoder</h4><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110112423051.png" alt="image-20231110112423051"></p>
+<ul>
+<li>在prompt embeddings中插入一个可学习的token，用于docoder的输出。</li>
+</ul>
+<p>（1）prompt toekns+output tokens进行self attn,</p>
+<p>（2）用得到的token和image embedding进行 cross attn（token作为Q）</p>
+<p>（3）point-wise MLP 更新token</p>
+<p>（4）用image embedding和（3）的token进行cross atten（image embedding作为Q）</p>
+<p>重复上述步骤2次，再将attn再通过残差进行连接，最终输出masks和iou scores。</p>
+<h3 id="2-3-data-engine（数据引擎）"><a href="#2-3-data-engine（数据引擎）" class="headerlink" title="2.3.data engine（数据引擎）"></a>2.3.data engine（数据引擎）</h3><ul>
+<li>辅助人工标注</li>
+</ul>
+<p>通过SAM基于浏览器的交互式分割工具，通过“brush”和”eraser”工具，进行标注。模型可以实时输出mask，建议标注者优先标记他们命名的对象，按图层顺序标记，如果一个mask标记超过30s，先处理下一张。</p>
+<p>SAM先用公开数据集训练，然后再用新增的标注mask训练。随着数据越多，image-encoder的能力越强，retrained了6次。随着模型改进，每个mask平均标注时间从34s到14s，平均每张图像mask从22增加到44个。在这个过程中，从12万图像中，收集了430万个mask。</p>
+<ul>
+<li>半自动</li>
+</ul>
+<p>增加mask的多样性，首先检测出可信的mask，然后用预测mask填充图像，让标注者标注未标记的mask。为了检测可信的mask,先用第一步的mask训练了一个类别一样的box检测器。半自动过程中，从18万张图像中生成了590万个mask。用新收集的数据，重新训练模型，平均标注时间又回到了34s,因为新的mask都是比较有难度的。每张图像上mask从44增加到72。</p>
+<ul>
+<li>全自动</li>
+</ul>
+<p>利用前2步，得到的大量的和多样性的mask，结合模型可以根据不明确的输入也能输出有效的mask（参考mask encoder）,对图像生成（32,32）个格网点，每个点预测一系列mask，如果一个点落在部分、子部分上，模型返回部分、子部分和整体的object。同时，通过预测的iou筛选 <em><strong>confident*</strong>(可信的mask),选取一个</em><strong>stable*<strong>的mask(稳定的mask,在相似的mask中，概率阈值在 0.5-δ和 0.5-δ之间)；最后，通过nms过滤</strong>*confident**<em>和</em></strong>stable***中重复的mask。</p>
+<p>为了提高mask比较小的，还通过放大图像进行crop，处理多个mask覆盖的情况。</p>
+<p>在1100万数据集上，生成了11亿高质量的mask。</p>
+<ul>
+<li>数据情况</li>
+</ul>
+<p>* 图片：从合作商获取1100万张图像，按短边重采样到1500像素。</p>
+<p>* mask:99.1%都是自动生成的，通过对比分析，自动生成的mask质量也是非常高的。为了评估质量，随机选500张图像（约5万个mask），让专业的标注人员进行标注，通过对比发现94%的mask有90%以上的iou。</p>
+<p>* 数据分布更广，从全世界获取数据，mask更多，数据偏向性较小。</p>
+<h2 id="三-Grounded-DINO"><a href="#三-Grounded-DINO" class="headerlink" title="三.Grounded DINO"></a>三.Grounded DINO</h2><h3 id="3-1背景介绍"><a href="#3-1背景介绍" class="headerlink" title="3.1背景介绍"></a>3.1背景介绍</h3><p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110194259484.png" alt="image-20231110194259484"></p>
+<p>在Grounding DINO中，作者想要完成这样一项任务：根据人类文字输入去检测任意类别的目标，称作<strong>开放世界目标检测问题（open-set object detection）。</strong></p>
+<p>完成<strong>open-set object detection</strong>的关键是将language信息引入到目标的通用特征表示中。例如，GLIP利用对比学习的方式在目标检测和文字短语之间建立起了联系，它在close-set和open-set数据集上都有很好的表现。但是，GLIP是基于传统的one-stage detector结构，就会有一定的局限性。</p>
+<p>受很多前期工作的启发（GLIP、DINO等），作者提出了Grounding DINO，它相对于GLIP有以下几点优势：</p>
+<p>Grounding DINO 的transformer结构更接近于NLP模型，因此它更容易同时处理图片和文字；</p>
+<p>Transformer-based detector在处理大型数据集时被证明有优势；</p>
+<p>作为DETR(detection transformer)的变种，DINO能够完成end-to-end的训练，而且不需要NMS(非极大值抑制（Non-Maximum Suppression）:它是一种用于目标检测中的后处理技术，旨在消除多个重叠的候选目标框，保留最可能包含目标的那一个)等额外的后处理。</p>
+<p>许多现存的工作都是通过引入语言信息来实现closed-set到open-set场景扩展的(一般在训练时不会接触到所有类别，这就需要模型具有较强的泛化能力)。通常来说，close-set detector由三个重要部分组成：<strong>Backbone</strong>用于提取特征，<strong>Neck</strong>用于特征增强，<strong>Head</strong>用于bbox预测。让一个close-set detector在文字引导下识别新类别的关键是利用contrastive loss建立图像特征和文字特征的关联。为了帮助模型获得跨模态的能力，一些工作在图像、文字的特征融合方面做了一些尝试。如下图所示，特征融合可能发生在以下三个阶段中：**neck (phase A), query initialization (phase B), 和 head (phase C)**。举例来说，GLIP选择了phase A，而OV-SETR选择在phase B进行模型融合。</p>
+<p>作者认为，在open-set检测任务中，越<strong>多</strong>越<strong>早</strong>的特征融合带来的收益越大。尽管这个想法很简单，但是在传统的detector中是很难实现的，因为类似Faster-RCNN这类的CNN-based模型很难在三个阶段和Transformer-based language模型特征进行融合。与此相对的，transformer-based detector与language model的结构高度相似，因此更容易进行特征融合。</p>
+<p>在以上结论的指导下，作者设计了不同的特征融合方式分别应用在三个阶段上：</p>
+<ul>
+<li><strong>Phasa A</strong>: 设计了结合self-attention、text-to-image cross-attention、image-to-text attention的特征enhancer应用在Neck中；</li>
+<li><strong>Phasa B</strong>: 设计了一个language-guided query selection方法用于初始化Head的query；</li>
+<li><strong>Phasa C</strong>: 设计了一个跨模态的decoder用于Head部分，从而增强query的特征表达。</li>
+</ul>
+<p>以上创新点我们会在后面详细展开。</p>
+<p>以往的open-set detection方法通常是在新的类别上测试其模型的有效性，如下图(b)左侧部分展示的那样。本文的作者引入了一个新的应用场景，那就是根据文字描述检测出指定部位，如下图(b)右侧部分那样，这个任务称为Referring Expression Comprehension (REC)。本文也会在REC任务中检验Grounding DINO的能力。</p>
+<h3 id="3-2方法创新"><a href="#3-2方法创新" class="headerlink" title="3.2方法创新"></a>3.2方法创新</h3><p><img src="https://github.com/IDEA-Research/GroundingDINO/blob/main/.asset/arch.png?raw=true" alt="arch.png"></p>
+<p>简单来说，既CLIP打破文字和图像之间的壁垒、DINO提高了目标检测精度的上限之后，又一力作横空出世，它就是–Grounding DINO。</p>
+<p>Grounding DINO的整体结构如上图所示。Grounding DINO是一个双encoder单decoder结构，它包含了一个<strong>image backbone</strong>用于提取image feature、一个<strong>text backbone</strong>用于提取text feature、一个<strong>feature enhancer</strong>用于融合image和text feature、一个<strong>language-guide query selection</strong>模块用于query初始化、一个<strong>cross-modality decoder</strong>用于bbox（bounding box）预测。</p>
+<h4 id="3-2-1-Feature-Extraction-and-Enhancer"><a href="#3-2-1-Feature-Extraction-and-Enhancer" class="headerlink" title="3.2.1 Feature Extraction and Enhancer"></a>3.2.1 Feature Extraction and Enhancer</h4><p>在特征提取方面，采取Swin Transformer作为image backbone，BERT（下面有介绍）作为text backbone。像DETR（detection Transformer）系列模型中设计的那样，image backbone提取了multi-scale的图像特征。提取完image features和text features后，作者将它们输入到一个feature enhancer中以融合跨模态特征，其结构如下图所示。</p>
+<p>​	<strong>Swin Transformer（是一种用于图像分类等计算机视觉任务的强大模型）：</strong></p>
+<p>​		Swin Transformer的一些关键特点和创新点包括：</p>
+<ol>
+<li><p><strong>局部操作和全局协同：</strong> Swin Transformer引入了一种分层的局部操作和全局协同的方式，通过使用小型的局部窗口来处理局部信息，并使用全局协同机制来整合不同局部信息。</p>
+</li>
+<li><p><strong>跨层连接：</strong> Swin Transformer引入了跨层连接，允许信息在不同层次之间传递。这有助于模型更好地捕获多尺度的特征。</p>
+</li>
+<li><p><strong>窗口化的注意力机制：</strong> Swin Transformer使用窗口化的注意力机制，以将输入分割为固定大小的窗口，并在每个窗口上执行自注意力操作。这种方法有效减少了计算复杂性。</p>
+</li>
+<li><p><strong>基于层次分解的Transformer块：</strong> Swin Transformer使用基于层次分解的Transformer块，将大型Transformer块分解为多个小的、可组合的块，这有助于提高训练效率。</p>
+<p><em><strong>BERT：（预训练语言模型，它基于Transformer架构）</strong></em>*</p>
+</li>
+</ol>
+<p><img src="C:\Users\VULCAN\AppData\Roaming\Typora\typora-user-images\image-20231110203438947.png" alt="image-20231110203438947"></p>
+<p><strong>作者分别利用Deformable Self-Attention和Self-Attention来增强image features和text features，然后利用GLIP中的image-to-text 和 text-to-image cross-attention实现特征融合。</strong></p>
+<p>Deformable Self-Attention和传统的Self-Attention主要有两个关键的区别：注意力权重的计算和采样位置的灵活性。</p>
+<ol>
+<li><strong>注意力权重的计算：</strong><ul>
+<li><strong>Self-Attention：</strong> 传统的Self-Attention计算注意力权重时通常使用全连接层（通常是线性层）来学习权重。这意味着每个位置之间的关系由一个全局的权重矩阵决定。</li>
+<li><strong>Deformable Self-Attention：</strong> Deformable Self-Attention引入了可学习的偏移（offset）参数，使得每个位置可以在注意力计算中进行动态调整。这使得模型能够更灵活地调整不同位置之间的注意力分布，以适应输入数据的不规则结构。</li>
+</ul>
+</li>
+<li><strong>采样位置的灵活性：</strong><ul>
+<li><strong>Self-Attention：</strong> 在传统的Self-Attention中，注意力权重是通过全局的权重矩阵计算的，因此无法灵活地适应输入数据中的局部结构和变化。</li>
+<li><strong>Deformable Self-Attention：</strong> 引入了偏移参数后，Deformable Self-Attention可以根据输入数据的局部结构和特征差异来动态地调整注意力的计算。这使得模型更能够关注数据中的重要局部信息。</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -235,6 +1304,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -299,7 +1371,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
